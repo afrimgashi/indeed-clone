@@ -1,41 +1,69 @@
-/* Responsive design */
 @media (max-width: 1024px) {
     .main-container {
-        grid-template-columns: 250px 1fr;
+        grid-template-columns: 1fr 2fr;
     }
 }
 
 @media (max-width: 768px) {
-    .main-container {
-        grid-template-columns: 1fr;
-        padding: 20px;
-    }
-
     .header {
         flex-direction: column;
-        text-align: center;
-        padding: 20px;
+        padding: 1rem;
     }
 
     .nav {
         flex-direction: column;
-        gap: 15px;
+        gap: 1rem;
+        display: none;
+    }
+
+    .nav.active {
+        display: flex;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: white;
+        cursor: pointer;
+    }
+
+    .header-search {
+        display: block;
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    .main-container {
+        grid-template-columns: 1fr;
+        padding: 1rem;
     }
 
     .hero {
-        padding: 30px 20px;
+        padding: 2rem 1rem;
     }
 
     .hero-search-container {
         flex-direction: column;
     }
 
-    .quick-filters {
-        flex-direction: column;
-        align-items: center;
+    .hero-search, .btn {
+        width: 100%;
     }
 
-    .trending-carousel {
-        flex-direction: column;
+    .filters {
+        position: static;
     }
+
+    .job-alerts {
+        width: 90%;
+        right: 5%;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.4rem; }
+    .btn { padding: 0.5rem 1rem; }
 }

@@ -1,8 +1,7 @@
-/* Structural layout */
 .header {
-    background-color: var(--primary-color);
+    background: var(--gradient);
     color: white;
-    padding: 15px 30px;
+    padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -10,42 +9,27 @@
     position: sticky;
     top: 0;
     z-index: 100;
+    transition: all 0.3s ease;
 }
 
 .nav {
     display: flex;
-    gap: 20px;
-    align-items: center;
-}
-
-.user-profile {
-    display: flex;
-    gap: 10px;
+    gap: 1.5rem;
     align-items: center;
 }
 
 .main-container {
     display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 30px;
+    grid-template-columns: 1fr 3fr;
+    gap: 2rem;
     max-width: 1400px;
-    margin: 30px auto;
-    padding: 0 30px;
+    margin: 2rem auto;
+    padding: 0 2rem;
 }
 
 .footer {
-    background-color: var(--primary-color);
+    background: var(--gradient);
     color: white;
+    padding: 2rem;
     text-align: center;
-    padding: 30px;
-    margin-top: 40px;
-}
-
-.footer-links {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 15px;
 }

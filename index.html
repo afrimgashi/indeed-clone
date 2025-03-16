@@ -4,65 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Indeed Clone - Advanced Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/typography.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/widgets.css">
+    <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/utilities.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
     <header class="header">
-        <div class="logo">Indeed Clone</div>
+        <div class="logo"><i class="fas fa-briefcase"></i> Indeed Clone</div>
         <nav class="nav">
-            <a href="#home">Home</a>
-            <a href="#reviews">Reviews</a>
-            <a href="#salaries">Salaries</a>
+            <a href="#home" class="smooth-scroll">Home</a>
+            <a href="#reviews" class="smooth-scroll">Reviews</a>
+            <a href="#salaries" class="smooth-scroll">Salaries</a>
             <a href="#signin" class="btn-signin" onclick="showLoginModal()">Sign In</a>
             <a href="#postjob" class="btn-postjob">Post Job</a>
-            <button class="btn btn-secondary theme-toggle" aria-label="Toggle Dark Mode">Dark Mode</button>
+            <button class="btn btn-secondary theme-toggle" aria-label="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
             <div class="user-profile hidden">
                 <span id="user-email"></span>
                 <button class="btn btn-secondary" onclick="logout()">Logout</button>
             </div>
+            <button class="mobile-menu-toggle"><i class="fas fa-bars"></i></button>
         </nav>
+        <div class="header-search hidden">
+            <input type="text" class="search-bar" id="header-search" placeholder="Search jobs..." list="search-suggestions">
+            <datalist id="search-suggestions"></datalist>
+        </div>
     </header>
 
     <section class="hero">
         <div class="hero-content">
-            <h1>Discover Your Next Career Move</h1>
-            <p>Advanced job search with real-time insights.</p>
+            <h1>Discover Your Next Career</h1>
+            <p>Find jobs with advanced tools and insights.</p>
             <div class="hero-search-container">
-                <input type="text" class="search-bar hero-search" id="hero-search" placeholder="Job title, company, or keywords" list="search-suggestions" aria-label="Search jobs">
-                <datalist id="search-suggestions"></datalist>
-                <button class="btn btn-primary" onclick="searchJobs()">Search</button>
-            </div>
-            <div class="quick-filters">
-                <select id="quick-category">
-                    <option value="all">Category</option>
-                    <option value="tech">Tech</option>
-                    <option value="healthcare">Healthcare</option>
-                </select>
-                <input type="text" id="quick-location" placeholder="Location">
+                <input type="text" class="search-bar hero-search" id="hero-search" placeholder="Job title or company" list="search-suggestions" aria-label="Search jobs">
+                <button class="btn btn-primary" onclick="searchJobs()"><i class="fas fa-search"></i> Search</button>
             </div>
         </div>
     </section>
 
-    <section class="trending">
+    <section class="trending widget">
         <h3>Trending Topics</h3>
-        <div class="trending-carousel">
-            <a href="#hiringlab">Hiring Lab</a>
-            <a href="#advice">Career Advice</a>
-            <a href="#jobs">Browse Jobs</a>
-            <a href="#companies">Browse Companies</a>
+        <div class="carousel">
+            <div class="carousel-item"><a href="#hiringlab">Hiring Lab</a></div>
+            <div class="carousel-item"><a href="#advice">Career Advice</a></div>
+            <div class="carousel-item"><a href="#jobs">Browse Jobs</a></div>
+            <div class="carousel-item"><a href="#companies">Browse Companies</a></div>
         </div>
     </section>
 
     <main class="main-container">
-        <aside class="filters">
-            <h3>Refine Your Search</h3>
+        <aside class="filters sticky-filter">
+            <h3>Refine Search</h3>
             <select class="filter-select" id="category-filter" onchange="filterJobs()">
                 <option value="all">All Categories</option>
                 <option value="tech">Tech</option>
@@ -70,53 +70,31 @@
             </select>
             <input type="text" class="filter-input" id="location-filter" placeholder="Location" oninput="filterJobs()">
             <div class="filter-range">
-                <label for="salary-range">Salary Range</label>
+                <label for="salary-range">Salary</label>
                 <input type="range" id="salary-range" min="0" max="200000" value="0" oninput="updateSalaryValue(this.value); filterJobs()">
                 <span id="salary-value">$0+</span>
             </div>
-            <select class="filter-select" id="job-type-filter" onchange="filterJobs()">
-                <option value="all">All Job Types</option>
-                <option value="full-time">Full-Time</option>
-                <option value="part-time">Part-Time</option>
-            </select>
-            <label><input type="checkbox" id="remote-filter" onchange="filterJobs()"> Remote Only</label>
-            <select class="filter-select" id="experience-filter" onchange="filterJobs()">
-                <option value="all">Experience Level</option>
-                <option value="entry">Entry</option>
-                <option value="mid">Mid</option>
-                <option value="senior">Senior</option>
-            </select>
-            <select class="filter-select" id="date-filter" onchange="filterJobs()">
-                <option value="all">Date Posted</option>
-                <option value="24h">Last 24 Hours</option>
-                <option value="7d">Last 7 Days</option>
-                <option value="30d">Last 30 Days</option>
-            </select>
-            <button class="btn btn-secondary" onclick="subscribeToAlerts()">Job Alerts</button>
+            <label><input type="checkbox" id="remote-filter" onchange="filterJobs()"> Remote</label>
         </aside>
 
         <section class="job-listings">
             <h2>Job Listings</h2>
             <div class="sort-options">
-                <label>Sort by:</label>
                 <select id="sort-filter" onchange="sortJobs()">
                     <option value="relevance">Relevance</option>
                     <option value="date">Date</option>
                     <option value="salary">Salary</option>
                 </select>
-                <label><input type="checkbox" id="infinite-scroll-toggle" onchange="toggleInfiniteScroll()"> Infinite Scroll</label>
             </div>
-            <input type="text" class="search-bar" id="job-search" placeholder="Search jobs..." aria-label="Filter jobs" oninput="searchJobs()">
             <div class="jobs-grid" id="jobs-grid"></div>
             <div class="pagination" id="pagination"></div>
-            <button class="btn btn-secondary load-more hidden" id="load-more">Load More</button>
         </section>
 
         <section class="post-job hidden" id="post-job">
             <h2>Post a Job</h2>
             <form id="job-form">
                 <div class="form-group">
-                    <label for="job-title">Job Title</label>
+                    <label for="job-title">Title</label>
                     <input type="text" id="job-title" placeholder="e.g., Software Engineer" required>
                 </div>
                 <div class="form-group">
@@ -127,107 +105,24 @@
                     <label for="location">Location</label>
                     <input type="text" id="location" placeholder="e.g., Remote" required>
                 </div>
-                <div class="form-group">
-                    <label for="salary">Salary</label>
-                    <input type="text" id="salary" placeholder="e.g., $100k">
-                </div>
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea id="description" placeholder="Job details..." required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="tags">Tags (comma-separated)</label>
-                    <input type="text" id="tags" placeholder="e.g., Remote, Full-Time">
-                </div>
-                <div class="form-group">
-                    <label for="job-type-post">Job Type</label>
-                    <select id="job-type-post" required>
-                        <option value="full-time">Full-Time</option>
-                        <option value="part-time">Part-Time</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Sponsorship</label>
-                    <label><input type="radio" name="sponsorship" value="basic" checked> Basic ($0)</label>
-                    <label><input type="radio" name="sponsorship" value="premium"> Premium ($5)</label>
-                    <label><input type="radio" name="sponsorship" value="featured"> Featured ($10)</label>
-                </div>
-                <div class="form-group">
-                    <label for="photo">Upload Photo</label>
-                    <input type="file" id="photo" accept="image/*">
-                </div>
-                <button type="button" class="btn btn-secondary" onclick="previewJob()">Preview</button>
-                <button type="submit" class="btn btn-primary">Post Job</button>
+                <button type="submit" class="btn btn-primary">Post</button>
             </form>
-            <div class="job-preview hidden" id="job-preview"></div>
         </section>
     </main>
 
-    <!-- Modals -->
-    <div class="modal hidden" id="login-modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('login-modal')">×</span>
-            <h3>Log In</h3>
-            <form id="login-form">
-                <input type="email" id="login-email" placeholder="Email" required>
-                <input type="password" id="login-password" placeholder="Password" required>
-                <button type="submit" class="btn btn-primary">Log In</button>
-            </form>
-            <button class="btn btn-google" onclick="googleLogin()">Log In with Google</button>
-            <p>No account? <a href="#" onclick="showSignupModal()">Sign Up</a></p>
-        </div>
-    </div>
-
-    <div class="modal hidden" id="signup-modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('signup-modal')">×</span>
-            <h3>Sign Up</h3>
-            <form id="signup-form">
-                <input type="email" id="signup-email" placeholder="Email" required>
-                <input type="password" id="signup-password" placeholder="Password" required>
-                <button type="submit" class="btn btn-primary">Sign Up</button>
-            </form>
-            <p>Have an account? <a href="#" onclick="showLoginModal()">Log In</a></p>
-        </div>
-    </div>
-
-    <div class="modal hidden" id="resume-modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('resume-modal')">×</span>
-            <h3>Post Your Resume</h3>
-            <form id="resume-form">
-                <input type="file" id="resume-file" accept=".pdf,.doc,.docx" required>
-                <button type="submit" class="btn btn-primary">Upload</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="modal hidden" id="job-details-modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('job-details-modal')">×</span>
-            <div id="job-details-content"></div>
-            <form id="apply-form" class="hidden">
-                <input type="text" id="applicant-name" placeholder="Your Name" required>
-                <input type="email" id="applicant-email" placeholder="Your Email" required>
-                <button type="submit" class="btn btn-primary">Apply</button>
-            </form>
-        </div>
-    </div>
+    <aside class="job-alerts widget hidden" id="job-alerts">
+        <h3>Job Alerts</h3>
+        <p>Get notified about new jobs!</p>
+        <button class="btn btn-primary" onclick="subscribeToAlerts()">Subscribe</button>
+    </aside>
 
     <footer class="footer">
-        <p>© 2025 Indeed Clone. All Rights Reserved.</p>
+        <p>© 2025 Indeed Clone</p>
         <ul class="footer-links">
             <li><a href="#about">About</a></li>
             <li><a href="#help">Help</a></li>
             <li><a href="#privacy">Privacy</a></li>
-            <li><a href="#terms">Terms</a></li>
-            <li><a href="#twitter">Twitter</a></li>
-            <li><a href="#linkedin">LinkedIn</a></li>
         </ul>
-        <select class="language-toggle">
-            <option value="en">English</option>
-            <option value="es">Español (Coming Soon)</option>
-        </select>
     </footer>
 
     <script src="js/script.js"></script>

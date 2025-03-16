@@ -1,16 +1,13 @@
-/* Global styles and variables */
 :root {
     --primary-color: #085ff7;
     --secondary-color: #f5f5f5;
     --text-color: #2d2d2d;
     --bg-color: #f4f4f9;
-    --shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    --success-color: #28a745;
-    --danger-color: #dc3545;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --gradient: linear-gradient(135deg, #085ff7, #1a73e8);
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.6;
@@ -22,13 +19,4 @@ body.dark-mode {
     --secondary-color: #333;
     --text-color: #e0e0e0;
     --bg-color: #1a1a1a;
-}
-
-a {
-    color: var(--primary-color);
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
 }
