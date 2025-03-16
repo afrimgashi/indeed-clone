@@ -28,13 +28,14 @@
 }
 
 .job-card {
-    background: var(--glass-bg);
+    background: #2a2a2a; /* Explicitly set dark mode background */
     backdrop-filter: blur(10px);
     border-radius: 10px;
     padding: 1.5rem;
     box-shadow: var(--shadow);
     transition: transform 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--dark-text); /* Ensure text is readable */
 }
 
 .job-card:hover {

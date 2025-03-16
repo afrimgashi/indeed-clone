@@ -1,4 +1,4 @@
-:root {
+body {
     --primary-color: #085ff7;
     --secondary-color: #f5f5f5;
     --text-color: #2d2d2d;
@@ -11,26 +11,39 @@
     --glass-bg: rgba(255, 255, 255, 0.1);
 }
 
-body {
+body.dark-mode {
     background-color: var(--dark-bg);
     color: var(--dark-text);
-    line-height: 1.6;
-    overflow-x: hidden;
+    --secondary-color: var(--dark-secondary);
+    --gradient: linear-gradient(135deg, #1a73e8, #4a90e2);
 }
 
-body.light-mode {
-    background-color: var(--bg-color);
+body.dark-mode .widget,
+body.dark-mode .job-card,
+body.dark-mode .filters,
+body.dark-mode .job-listings {
+    background: #2a2a2a;
+    color: var(--dark-text);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .carousel-item,
+body.dark-mode .tag {
+    background: #444;
+    color: var(--dark-text);
+}
+
+body.light-mode .widget,
+body.light-mode .job-card,
+body.light-mode .filters,
+body.light-mode .job-listings {
+    background: white;
     color: var(--text-color);
-    --secondary-color: var(--secondary-color);
-    --gradient: linear-gradient(135deg, #085ff7, #4a90e2);
+    border-color: #ddd;
 }
 
-a {
-    color: var(--primary-color);
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-    color: #064ac7;
+body.light-mode .carousel-item,
+body.light-mode .tag {
+    background: #e0e0e0;
+    color: #4a4a4a;
 }
