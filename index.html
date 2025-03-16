@@ -21,7 +21,6 @@
 </head>
 <body>
     <header class="header">
-        <button class="mobile-menu-toggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
         <div class="logo">Indeed Clone</div>
         <nav class="nav">
             <a href="#home" class="nav-link smooth-scroll">Home</a>
@@ -32,12 +31,8 @@
             <a href="#signin" class="nav-link btn-signin" onclick="showLoginModal()">Sign In</a>
             <a href="#postjob" class="nav-link btn-postjob" onclick="showPostJob()">Post Job</a>
         </nav>
+        <button class="mobile-menu-toggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
     </header>
-
-    <div class="sticky-search">
-        <input type="text" class="search-bar" id="sticky-search" placeholder="Search" list="search-suggestions" aria-label="Search jobs">
-        <button class="btn btn-primary" onclick="searchJobs()">Search</button>
-    </div>
 
     <section class="hero parallax">
         <div class="hero-content">

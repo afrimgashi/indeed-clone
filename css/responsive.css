@@ -37,10 +37,6 @@
     .job-listings {
         padding: 2rem;
     }
-
-    .sticky-search {
-        display: flex;
-    }
 }
 
 @media (max-width: 1024px) {
@@ -57,6 +53,7 @@
     .header {
         padding: 0.3rem 0.8rem;
         height: 40px;
+        justify-content: space-between;
     }
 
     .logo {
