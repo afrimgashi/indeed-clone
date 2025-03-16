@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Indeed Clone</title>
+    <title>Salaries - Indeed Clone</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/reset.css">
@@ -26,9 +26,9 @@
             <a href="index.html" class="nav-link smooth-scroll">Home</a>
             <a href="reviews.html" class="nav-link">Reviews</a>
             <a href="companies.html" class="nav-link">Companies</a>
-            <a href="salaries.html" class="nav-link">Salaries</a>
+            <a href="#salaries" class="nav-link">Salaries</a>
             <a href="categories.html" class="nav-link">Categories</a>
-            <a href="#dashboard" class="nav-link">Dashboard</a>
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
             <a href="signin.html" class="nav-link btn-signin">Sign In</a>
             <a href="#postjob" class="nav-link btn-postjob">Post Job</a>
             <div class="profile-dropdown">
@@ -41,45 +41,50 @@
         <button class="mobile-menu-toggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
     </header>
 
-    <section class="dashboard">
-        <h1>Dashboard</h1>
-        <div class="user-profile widget fade-in">
-            <h2>User Profile</h2>
-            <p><strong>Name:</strong> <span id="user-name">Guest</span></p>
-            <p><strong>Email:</strong> <span id="user-email">guest@example.com</span></p>
-        </div>
-
-        <div class="saved-jobs widget fade-in">
-            <h2>Saved Jobs</h2>
-            <div id="saved-jobs-list">
-                <p>No saved jobs yet.</p>
+    <section class="salaries">
+        <h1>Salary Insights</h1>
+        <div class="salary-calculator widget fade-in">
+            <h2>Salary Calculator</h2>
+            <form id="salary-calculator-form">
+                <select id="salary-role" required>
+                    <option value="">Select Role</option>
+                    <option value="web-developer">Web Developer</option>
+                    <option value="nurse">Nurse Practitioner</option>
+                    <option value="financial-analyst">Financial Analyst</option>
+                </select>
+                <input type="text" id="salary-location" placeholder="Location" required>
+                <button type="submit" class="btn btn-primary">Calculate</button>
+            </form>
+            <div id="salary-result" class="hidden">
+                <p>Estimated Salary: <strong>$80,000/year</strong></p>
             </div>
         </div>
 
-        <div class="applications widget fade-in">
-            <h2>Your Applications</h2>
-            <div id="applications-list">
-                <p>No applications yet.</p>
-            </div>
-        </div>
-
-        <div class="recommendations widget fade-in">
-            <h2>Recommended Jobs</h2>
-            <div class="jobs-grid" id="recommended-jobs">
-                <div class="job-card">
-                    <h3>Software Engineer</h3>
-                    <p>TechStar - San Francisco</p>
-                    <p>$120k</p>
-                    <div class="tags"><span class="tag">Full-Time</span><span class="tag">Tech</span></div>
-                    <button class="btn btn-primary mt-20" onclick="showJobDetails(4)">View Details</button>
+        <div class="salary-comparison widget fade-in">
+            <h2>Salary Comparison</h2>
+            <div class="comparison-table">
+                <div class="comparison-item">
+                    <h3>Web Developer</h3>
+                    <p>New York: $80k</p>
+                    <p>Boston: $75k</p>
+                </div>
+                <div class="comparison-item">
+                    <h3>Nurse Practitioner</h3>
+                    <p>New York: $90k</p>
+                    <p>Boston: $85k</p>
+                </div>
+                <div class="comparison-item">
+                    <h3>Financial Analyst</h3>
+                    <p>New York: $85k</p>
+                    <p>Boston: $80k</p>
                 </div>
             </div>
         </div>
 
-        <div class="analytics widget fade-in">
-            <h2>Search Analytics</h2>
-            <p><strong>Most Searched Role:</strong> Web Developer</p>
-            <p><strong>Top Location:</strong> New York</p>
+        <div class="salary-trends widget fade-in">
+            <h2>Salary Trends</h2>
+            <p>Tech roles have seen a 10% salary increase in 2025.</p>
+            <p>Healthcare salaries are projected to rise by 5% next year.</p>
         </div>
     </section>
 

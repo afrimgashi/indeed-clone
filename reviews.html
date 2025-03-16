@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews - Indeed Clone</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/typography.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/modals.css">
+    <link rel="stylesheet" href="css/widgets.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/utilities.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Indeed Clone</div>
+        <nav class="nav">
+            <a href="index.html" class="nav-link smooth-scroll">Home</a>
+            <a href="#reviews" class="nav-link">Reviews</a>
+            <a href="companies.html" class="nav-link">Companies</a>
+            <a href="salaries.html" class="nav-link">Salaries</a>
+            <a href="categories.html" class="nav-link">Categories</a>
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="signin.html" class="nav-link btn-signin">Sign In</a>
+            <a href="#postjob" class="nav-link btn-postjob">Post Job</a>
+            <div class="profile-dropdown">
+                <button class="profile-btn"><i class="fas fa-user"></i></button>
+                <div class="dropdown-content hidden">
+                    <a href="#" onclick="logout()">Logout</a>
+                </div>
+            </div>
+        </nav>
+        <button class="mobile-menu-toggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
+    </header>
+
+    <section class="reviews">
+        <h1>Company Reviews</h1>
+        <div class="review-filter">
+            <select id="company-filter" onchange="filterReviews()">
+                <option value="all">All Companies</option>
+                <option value="techstar">TechStar</option>
+                <option value="healthcare-inc">HealthCare Inc</option>
+                <option value="financecorp">FinanceCorp</option>
+            </select>
+            <select id="rating-filter" onchange="filterReviews()">
+                <option value="all">All Ratings</option>
+                <option value="5">5 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="3">3 Stars</option>
+            </select>
+        </div>
+        <div class="review-list" id="review-list">
+            <div class="review-card">
+                <h2>TechStar</h2>
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p>"Great company culture and opportunities for growth."</p>
+                <span>— Alex M.</span>
+            </div>
+            <div class="review-card">
+                <h2>HealthCare Inc</h2>
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                </div>
+                <p>"Supportive team, but long hours."</p>
+                <span>— Emily R.</span>
+            </div>
+            <div class="review-card">
+                <h2>FinanceCorp</h2>
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                </div>
+                <p>"Good pay, but management needs improvement."</p>
+                <span>— John D.</span>
+            </div>
+        </div>
+        <button class="btn btn-primary" onclick="showReviewForm()">Write a Review</button>
+    </section>
+
+    <div class="modal hidden" id="review-form-modal">
+        <div class="modal-content slide-in">
+            <span class="close" onclick="closeModal('review-form-modal')">×</span>
+            <h2>Write a Review</h2>
+            <form id="review-form">
+                <select id="review-company" required>
+                    <option value="">Select Company</option>
+                    <option value="techstar">TechStar</option>
+                    <option value="healthcare-inc">HealthCare Inc</option>
+                    <option value="financecorp">FinanceCorp</option>
+                </select>
+                <div class="rating-input">
+                    <label for="review-rating">Rating:</label>
+                    <select id="review-rating" required>
+                        <option value="5">5 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="2">2 Stars</option>
+                        <option value="1">1 Star</option>
+                    </select>
+                </div>
+                <textarea id="review-text" placeholder="Your review..." required></textarea>
+                <button type="submit" class="btn btn-primary">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#help">Help</a>
+                <a href="#privacy">Privacy</a>
+            </div>
+            <div class="social-icons">
+                <a href="#twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#linkedin"><i class="fab fa-linkedin"></i></a>
+                <a href="#facebook"><i class="fab fa-facebook"></i></a>
+            </div>
+            <form class="newsletter">
+                <input type="email" placeholder="Subscribe for updates" aria-label="Newsletter email">
+                <button class="btn btn-primary">Subscribe</button>
+            </form>
+            <p>© 2025 Indeed Clone</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top hidden" onclick="scrollToTop()"><i class="fas fa-arrow-up"></i></button>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

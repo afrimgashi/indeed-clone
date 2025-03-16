@@ -21,33 +21,43 @@
 </head>
 <body>
     <header class="header">
-        <button class="mobile-menu-toggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
         <div class="logo">Indeed Clone</div>
         <nav class="nav">
             <a href="index.html" class="nav-link smooth-scroll">Home</a>
-            <a href="#reviews" class="nav-link smooth-scroll">Reviews</a>
-            <a href="#salaries" class="nav-link smooth-scroll">Salaries</a>
+            <a href="reviews.html" class="nav-link">Reviews</a>
+            <a href="companies.html" class="nav-link">Companies</a>
+            <a href="salaries.html" class="nav-link">Salaries</a>
             <a href="#categories" class="nav-link">Categories</a>
             <a href="dashboard.html" class="nav-link">Dashboard</a>
-            <a href="#signin" class="nav-link btn-signin" onclick="showLoginModal()">Sign In</a>
+            <a href="signin.html" class="nav-link btn-signin">Sign In</a>
             <a href="#postjob" class="nav-link btn-postjob">Post Job</a>
+            <div class="profile-dropdown">
+                <button class="profile-btn"><i class="fas fa-user"></i></button>
+                <div class="dropdown-content hidden">
+                    <a href="#" onclick="logout()">Logout</a>
+                </div>
+            </div>
         </nav>
+        <button class="mobile-menu-toggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
     </header>
 
     <section class="categories">
         <h1>Job Categories</h1>
         <div class="category-grid">
             <div class="category-card">
+                <i class="fas fa-laptop-code"></i>
                 <h2>Tech</h2>
                 <p>Explore jobs in software development, IT, and more.</p>
                 <a href="index.html?category=tech" class="btn btn-primary">Browse</a>
             </div>
             <div class="category-card">
+                <i class="fas fa-heartbeat"></i>
                 <h2>Healthcare</h2>
                 <p>Find opportunities in nursing, medicine, and healthcare services.</p>
                 <a href="index.html?category=healthcare" class="btn btn-primary">Browse</a>
             </div>
             <div class="category-card">
+                <i class="fas fa-chart-line"></i>
                 <h2>Finance</h2>
                 <p>Discover roles in banking, accounting, and financial analysis.</p>
                 <a href="index.html?category=finance" class="btn btn-primary">Browse</a>
@@ -74,6 +84,8 @@
             <p>© 2025 Indeed Clone</p>
         </div>
     </footer>
+
+    <button class="back-to-top hidden" onclick="scrollToTop()"><i class="fas fa-arrow-up"></i></button>
 
     <script src="js/script.js"></script>
 </body>

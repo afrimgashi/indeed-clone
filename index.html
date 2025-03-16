@@ -24,11 +24,12 @@
         <div class="logo">Indeed Clone</div>
         <nav class="nav">
             <a href="#home" class="nav-link smooth-scroll">Home</a>
-            <a href="#reviews" class="nav-link smooth-scroll">Reviews</a>
-            <a href="#salaries" class="nav-link smooth-scroll">Salaries</a>
+            <a href="reviews.html" class="nav-link">Reviews</a>
+            <a href="companies.html" class="nav-link">Companies</a>
+            <a href="salaries.html" class="nav-link">Salaries</a>
             <a href="categories.html" class="nav-link">Categories</a>
             <a href="dashboard.html" class="nav-link">Dashboard</a>
-            <a href="#signin" class="nav-link btn-signin" onclick="showLoginModal()">Sign In</a>
+            <a href="signin.html" class="nav-link btn-signin">Sign In</a>
             <a href="#postjob" class="nav-link btn-postjob" onclick="showPostJob()">Post Job</a>
             <div class="profile-dropdown">
                 <button class="profile-btn"><i class="fas fa-user"></i></button>
@@ -64,6 +65,27 @@
         </div>
     </section>
 
+    <section class="job-categories widget fade-in">
+        <h2>Explore Job Categories</h2>
+        <div class="carousel">
+            <div class="carousel-item category-item">
+                <i class="fas fa-laptop-code"></i>
+                <h3>Tech</h3>
+                <a href="categories.html?category=tech">Browse</a>
+            </div>
+            <div class="carousel-item category-item">
+                <i class="fas fa-heartbeat"></i>
+                <h3>Healthcare</h3>
+                <a href="categories.html?category=healthcare">Browse</a>
+            </div>
+            <div class="carousel-item category-item">
+                <i class="fas fa-chart-line"></i>
+                <h3>Finance</h3>
+                <a href="categories.html?category=finance">Browse</a>
+            </div>
+        </div>
+    </section>
+
     <section class="trending widget fade-in">
         <h2>Trending Topics</h2>
         <div class="carousel">
@@ -86,6 +108,18 @@
                     <option value="finance">Finance</option>
                 </select>
                 <input type="text" class="filter-input" id="location-filter" placeholder="Location" oninput="filterJobs()">
+                <select class="filter-select" id="experience-filter" onchange="filterJobs()">
+                    <option value="all">Experience Level</option>
+                    <option value="entry">Entry</option>
+                    <option value="mid">Mid</option>
+                    <option value="senior">Senior</option>
+                </select>
+                <select class="filter-select" id="job-type-filter" onchange="filterJobs()">
+                    <option value="all">Job Type</option>
+                    <option value="full-time">Full-Time</option>
+                    <option value="part-time">Part-Time</option>
+                    <option value="contract">Contract</option>
+                </select>
                 <div class="filter-range">
                     <label for="salary-range">Salary</label>
                     <input type="range" id="salary-range" min="0" max="200000" value="0" oninput="updateSalaryValue(this.value); filterJobs()">
@@ -104,7 +138,9 @@
                     <option value="salary">Salary</option>
                 </select>
             </div>
-            <div class="jobs-grid" id="jobs-grid"></div>
+            <div class="jobs-grid" id="jobs-grid">
+                <div class="loading-spinner hidden"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
+            </div>
             <div class="pagination" id="pagination"></div>
         </section>
     </main>
@@ -112,6 +148,45 @@
     <section class="featured-jobs widget fade-in">
         <h2>Featured Jobs</h2>
         <div class="carousel" id="featured-jobs-carousel"></div>
+    </section>
+
+    <section class="featured-companies widget fade-in">
+        <h2>Featured Companies</h2>
+        <div class="carousel">
+            <div class="carousel-item company-item">
+                <h3>TechStar</h3>
+                <p>10 Open Positions</p>
+                <a href="companies.html?company=techstar">View</a>
+            </div>
+            <div class="carousel-item company-item">
+                <h3>HealthCare Inc</h3>
+                <p>5 Open Positions</p>
+                <a href="companies.html?company=healthcare-inc">View</a>
+            </div>
+            <div class="carousel-item company-item">
+                <h3>FinanceCorp</h3>
+                <p>8 Open Positions</p>
+                <a href="companies.html?company=financecorp">View</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials widget fade-in">
+        <h2>What Our Users Say</h2>
+        <div class="carousel">
+            <div class="carousel-item testimonial-item">
+                <p>"Found my dream job in tech within a week!"</p>
+                <h3>— Sarah K.</h3>
+            </div>
+            <div class="carousel-item testimonial-item">
+                <p>"The salary comparison tool helped me negotiate a better offer."</p>
+                <h3>— John D.</h3>
+            </div>
+            <div class="carousel-item testimonial-item">
+                <p>"Best platform for healthcare jobs!"</p>
+                <h3>— Emily R.</h3>
+            </div>
+        </div>
     </section>
 
     <section class="job-stats widget fade-in">
