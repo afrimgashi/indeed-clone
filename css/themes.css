@@ -1,49 +1,24 @@
 body {
     --primary-color: #085ff7;
-    --secondary-color: #f5f5f5;
-    --text-color: #2d2d2d;
-    --bg-color: #f4f4f9;
-    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --secondary-color: #333;
+    --text-color: #e0e0e0;
+    --bg-color: #1a1a1a;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     --gradient: linear-gradient(135deg, #085ff7, #4a90e2);
-    --dark-bg: #1a1a1a;
-    --dark-text: #e0e0e0;
-    --dark-secondary: #333;
     --glass-bg: rgba(255, 255, 255, 0.1);
 }
 
-body.dark-mode {
-    background-color: var(--dark-bg);
-    color: var(--dark-text);
-    --secondary-color: var(--dark-secondary);
-    --gradient: linear-gradient(135deg, #1a73e8, #4a90e2);
-}
-
-body.dark-mode .widget,
-body.dark-mode .job-card,
-body.dark-mode .filters,
-body.dark-mode .job-listings {
+body .widget,
+body .job-card,
+body .filters,
+body .job-listings {
     background: #2a2a2a;
-    color: var(--dark-text);
+    color: var(--text-color);
     border-color: rgba(255, 255, 255, 0.2);
 }
 
-body.dark-mode .carousel-item,
-body.dark-mode .tag {
+body .carousel-item,
+body .tag {
     background: #444;
-    color: var(--dark-text);
-}
-
-body.light-mode .widget,
-body.light-mode .job-card,
-body.light-mode .filters,
-body.light-mode .job-listings {
-    background: white;
     color: var(--text-color);
-    border-color: #ddd;
-}
-
-body.light-mode .carousel-item,
-body.light-mode .tag {
-    background: #e0e0e0;
-    color: #4a4a4a;
 }
