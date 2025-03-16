@@ -37,6 +37,10 @@
     .job-listings {
         padding: 2rem;
     }
+
+    .sticky-search {
+        display: flex;
+    }
 }
 
 @media (max-width: 1024px) {
@@ -82,7 +86,7 @@
         background: none;
         border: none;
         font-size: 1rem;
-        color: white;
+        color: var(--dark-text);
         cursor: pointer;
         padding: 0.2rem;
     }
@@ -128,10 +132,8 @@
         padding: 0.8rem;
     }
 
-    .job-alerts {
-        width: 90%;
-        right: 5%;
-        bottom: 5px;
+    .category-grid {
+        grid-template-columns: 1fr;
     }
 }
 

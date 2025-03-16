@@ -1,26 +1,35 @@
 let jobs = JSON.parse(localStorage.getItem('jobs')) || [
-    { id: 1, title: "Web Developer", company: "CodeCo", location: "New York", salary: "$80k", tags: ["Full-Time"], featured: false }
+    { id: 1, title: "Web Developer", company: "CodeCo", location: "New York", salary: "$80k", tags: ["Full-Time", "Tech"], featured: false, description: "Build and maintain web applications." },
+    { id: 2, title: "Nurse Practitioner", company: "HealthCare Inc", location: "Boston", salary: "$90k", tags: ["Full-Time", "Healthcare"], featured: true, description: "Provide patient care in a hospital setting." },
+    { id: 3, title: "Financial Analyst", company: "FinanceCorp", location: "Chicago", salary: "$85k", tags: ["Full-Time", "Finance"], featured: false, description: "Analyze financial data and trends." },
+    { id: 4, title: "Software Engineer", company: "TechStar", location: "San Francisco", salary: "$120k", tags: ["Full-Time", "Tech", "Remote"], featured: true, description: "Develop scalable software solutions." },
+    { id: 5, title: "Medical Assistant", company: "MediCare", location: "Los Angeles", salary: "$60k", tags: ["Part-Time", "Healthcare"], featured: false, description: "Assist doctors with patient care." }
 ];
 let currentUser = localStorage.getItem('currentUser') || null;
 const JOBS_PER_PAGE = 5;
 let currentPage = 1;
+const suggestions = ["tech", "healthcare", "finance", "developer", "nurse", "new york", "remote"];
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadDarkMode();
+    loadTheme();
     updateUserStatus();
     renderJobs();
+    renderFeaturedJobs();
     setupMobileMenu();
     setupFilterToggle();
+    setupStickySearch();
     window.addEventListener('scroll', handleScroll);
 });
 
-function loadDarkMode() {
-    if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+function loadTheme() {
+    if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-mode');
 }
 
 document.querySelector('.theme-toggle').addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    document.body.classList.toggle('light-mode');
+    localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+    document.querySelector('.theme-toggle i').classList.toggle('fa-sun');
+    document.querySelector('.theme-toggle i').classList.toggle('fa-moon');
 });
 
 function setupMobileMenu() {
@@ -46,6 +55,17 @@ function setupFilterToggle() {
     }
 }
 
+function setupStickySearch() {
+    const stickySearch = document.querySelector('.sticky-search');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            stickySearch.classList.add('active');
+        } else {
+            stickySearch.classList.remove('active');
+        }
+    });
+}
+
 function handleScroll() {
     const header = document.querySelector('.header');
     if (window.scrollY > 50) header.classList.add('scrolled');
@@ -53,16 +73,9 @@ function handleScroll() {
 }
 
 function updateUserStatus() {
-    const profile = document.querySelector('.user-profile');
     const signinBtn = document.querySelector('.btn-signin');
-    if (currentUser) {
-        profile.classList.remove('hidden');
-        signinBtn.classList.add('hidden');
-        document.getElementById('user-email').textContent = currentUser;
-    } else {
-        profile.classList.add('hidden');
-        signinBtn.classList.remove('hidden');
-    }
+    if (currentUser) signinBtn.classList.add('hidden');
+    else signinBtn.classList.remove('hidden');
 }
 
 function showLoginModal() {
@@ -79,6 +92,31 @@ function showPostJob() {
     }
 }
 
+function showJobDetails(id) {
+    const job = jobs.find(j => j.id === id);
+    if (!job) return;
+    const modal = document.getElementById('job-details-modal');
+    const content = document.getElementById('job-details-content');
+    content.innerHTML = `
+        <h2>${job.title}</h2>
+        <p>${job.company} - ${job.location}</p>
+        <p>${job.salary}</p>
+        <p>${job.description}</p>
+        <div class="tags">${job.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
+    `;
+    modal.classList.remove('hidden');
+}
+
+function closeModal(id) {
+    document.getElementById(id).classList.add('hidden');
+}
+
+document.getElementById('apply-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Application submitted!');
+    closeModal('job-details-modal');
+});
+
 document.getElementById('job-form').addEventListener('submit', (e) => {
     e.preventDefault();
     if (!currentUser) return;
@@ -89,7 +127,8 @@ document.getElementById('job-form').addEventListener('submit', (e) => {
         location: document.getElementById('location').value,
         salary: "$80k",
         tags: ["New"],
-        featured: false
+        featured: false,
+        description: "Job description placeholder."
     };
     jobs.push(job);
     localStorage.setItem('jobs', JSON.stringify(jobs));
@@ -115,11 +154,23 @@ function renderJobs() {
             <p>${job.company} - ${job.location}</p>
             <p>${job.salary}</p>
             <div class="tags">${job.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
-            <button class="btn btn-primary mt-20">Apply</button>
+            <button class="btn btn-primary mt-20" onclick="showJobDetails(${job.id})">View Details</button>
         `;
         jobsGrid.appendChild(jobCard);
     });
     updatePagination(filteredJobs.length);
+    updateSuggestions();
+}
+
+function renderFeaturedJobs() {
+    const featuredJobs = jobs.filter(job => job.featured);
+    const carousel = document.getElementById('featured-jobs-carousel');
+    carousel.innerHTML = featuredJobs.map(job => `
+        <div class="carousel-item">
+            <h3>${job.title}</h3>
+            <p>${job.company}</p>
+        </div>
+    `).join('');
 }
 
 function filterJobs() {
@@ -170,6 +221,12 @@ function searchJobs() {
 
 function updateSalaryValue(value) {
     document.getElementById('salary-value').textContent = `$${parseInt(value).toLocaleString()}+`;
+}
+
+function updateSuggestions() {
+    const query = document.getElementById('hero-search').value.toLowerCase();
+    const datalist = document.getElementById('search-suggestions');
+    datalist.innerHTML = suggestions.filter(s => s.includes(query)).map(s => `<option value="${s}">`).join('');
 }
 
 document.querySelectorAll('.smooth-scroll').forEach(anchor => {

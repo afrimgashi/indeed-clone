@@ -7,7 +7,10 @@
 }
 
 .parallax {
-    background-image: url('https://via.placeholder.com/1920x1080?text=Parallax+Background');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     animation: parallax 20s infinite linear;
 }
 

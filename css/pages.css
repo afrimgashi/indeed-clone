@@ -1,6 +1,6 @@
 .hero {
     background: var(--gradient);
-    color: white;
+    color: var(--dark-text);
     padding: 2rem 2rem;
     text-align: center;
     border-radius: 0 0 20px 20px;
@@ -36,17 +36,17 @@
 }
 
 .parallax {
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: url('https://via.placeholder.com/1920x1080?text=Parallax+Background');
+    animation: parallax 20s infinite linear;
 }
 
 .filters {
-    background: white;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
     padding: 1.5rem;
     border-radius: 10px;
     box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .toggle-filters {
@@ -61,10 +61,12 @@
 }
 
 .job-listings {
-    background: white;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
     padding: 2rem;
     border-radius: 10px;
     box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .jobs-grid {
@@ -75,4 +77,26 @@
 
 .sort-options {
     margin-bottom: 1rem;
+}
+
+.categories, .dashboard {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.category-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.category-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }

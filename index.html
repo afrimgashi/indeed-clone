@@ -8,16 +8,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/themes.css">
     <link rel="stylesheet" href="css/typography.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/modals.css">
     <link rel="stylesheet" href="css/widgets.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/utilities.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
-<body>
+<body class="dark-mode">
     <header class="header">
         <button class="mobile-menu-toggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
         <div class="logo">Indeed Clone</div>
@@ -25,11 +27,18 @@
             <a href="#home" class="nav-link smooth-scroll">Home</a>
             <a href="#reviews" class="nav-link smooth-scroll">Reviews</a>
             <a href="#salaries" class="nav-link smooth-scroll">Salaries</a>
+            <a href="categories.html" class="nav-link">Categories</a>
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
             <a href="#signin" class="nav-link btn-signin" onclick="showLoginModal()">Sign In</a>
-            <a href="#postjob" class="nav-link btn-postjob">Post Job</a>
-            <button class="theme-toggle" aria-label="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
+            <a href="#postjob" class="nav-link btn-postjob" onclick="showPostJob()">Post Job</a>
+            <button class="theme-toggle" aria-label="Toggle Theme"><i class="fas fa-sun"></i></button>
         </nav>
     </header>
+
+    <div class="sticky-search">
+        <input type="text" class="search-bar" id="sticky-search" placeholder="Search jobs..." list="search-suggestions" aria-label="Search jobs">
+        <button class="btn btn-primary" onclick="searchJobs()">Search</button>
+    </div>
 
     <section class="hero parallax">
         <div class="hero-content">
@@ -37,6 +46,7 @@
             <p>Unlock opportunities with advanced job tools.</p>
             <div class="hero-search-container">
                 <input type="text" class="search-bar hero-search" id="hero-search" placeholder="Job title or company" list="search-suggestions" aria-label="Search jobs">
+                <datalist id="search-suggestions"></datalist>
                 <button class="btn btn-primary" onclick="searchJobs()">Search</button>
                 <button class="btn btn-secondary" onclick="showPostJob()">Post a Job</button>
             </div>
@@ -62,6 +72,7 @@
                     <option value="all">All Categories</option>
                     <option value="tech">Tech</option>
                     <option value="healthcare">Healthcare</option>
+                    <option value="finance">Finance</option>
                 </select>
                 <input type="text" class="filter-input" id="location-filter" placeholder="Location" oninput="filterJobs()">
                 <div class="filter-range">
@@ -89,29 +100,45 @@
 
     <section class="featured-jobs widget fade-in">
         <h2>Featured Jobs</h2>
-        <div class="carousel">
-            <div class="carousel-item">Featured Job 1</div>
-            <div class="carousel-item">Featured Job 2</div>
-            <div class="carousel-item">Featured Job 3</div>
-        </div>
+        <div class="carousel" id="featured-jobs-carousel"></div>
+    </section>
+
+    <section class="job-stats widget fade-in">
+        <h2>Job Statistics</h2>
+        <p>75+ jobs posted today!</p>
     </section>
 
     <footer class="footer">
-        <p>© 2025 Indeed Clone</p>
-        <ul class="footer-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#help">Help</a></li>
-            <li><a href="#privacy">Privacy</a></li>
-        </ul>
-        <div class="social-icons">
-            <a href="#twitter"><i class="fab fa-twitter"></i></a>
-            <a href="#linkedin"><i class="fab fa-linkedin"></i></a>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#help">Help</a>
+                <a href="#privacy">Privacy</a>
+            </div>
+            <div class="social-icons">
+                <a href="#twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#linkedin"><i class="fab fa-linkedin"></i></a>
+                <a href="#facebook"><i class="fab fa-facebook"></i></a>
+            </div>
+            <form class="newsletter">
+                <input type="email" placeholder="Subscribe for updates" aria-label="Newsletter email">
+                <button class="btn btn-primary">Subscribe</button>
+            </form>
+            <p>© 2025 Indeed Clone</p>
         </div>
-        <form class="newsletter">
-            <input type="email" placeholder="Subscribe for updates" aria-label="Newsletter email">
-            <button class="btn btn-primary">Subscribe</button>
-        </form>
     </footer>
+
+    <div class="modal hidden" id="job-details-modal">
+        <div class="modal-content slide-in">
+            <span class="close" onclick="closeModal('job-details-modal')">×</span>
+            <div id="job-details-content"></div>
+            <form id="apply-form" class="apply-form">
+                <input type="text" id="applicant-name" placeholder="Your Name" required>
+                <input type="email" id="applicant-email" placeholder="Your Email" required>
+                <button type="submit" class="btn btn-primary">Apply</button>
+            </form>
+        </div>
+    </div>
 
     <script src="js/script.js"></script>
 </body>

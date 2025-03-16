@@ -8,20 +8,21 @@
     --dark-bg: #1a1a1a;
     --dark-text: #e0e0e0;
     --dark-secondary: #333;
+    --glass-bg: rgba(255, 255, 255, 0.1);
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
     line-height: 1.6;
     overflow-x: hidden;
 }
 
-body.dark-mode {
-    background-color: var(--dark-bg);
-    color: var(--dark-text);
-    --secondary-color: var(--dark-secondary);
-    --gradient: linear-gradient(135deg, #1a73e8, #4a90e2);
+body.light-mode {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    --secondary-color: var(--secondary-color);
+    --gradient: linear-gradient(135deg, #085ff7, #4a90e2);
 }
 
 a {

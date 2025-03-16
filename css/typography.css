@@ -17,7 +17,7 @@ p, a, input, select, button {
 }
 
 .nav-link {
-    color: white;
+    color: var(--dark-text);
     font-size: 1rem;
     padding: 0.5rem 1rem;
     transition: all 0.3s ease;
