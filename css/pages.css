@@ -1,0 +1,137 @@
+/* Page-specific styles */
+.hero {
+    background: linear-gradient(135deg, #e6f0fa 0%, #d0e1f9 100%);
+    padding: 60px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero h1 {
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.hero-search-container {
+    display: flex;
+    gap: 10px;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.hero-search {
+    flex-grow: 1;
+}
+
+.quick-filters {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.quick-filters select, .quick-filters input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.trending {
+    background: white;
+    padding: 30px;
+    margin: 30px auto;
+    max-width: 1200px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.trending-carousel {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 10px 0;
+}
+
+.filters {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.filter-select, .filter-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.filter-range {
+    margin: 15px 0;
+}
+
+.job-listings {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.sort-options {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.jobs-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.post-job {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    margin-top: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.form-group input, .form-group textarea, .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.job-preview {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px dashed #ddd;
+    border-radius: 6px;
+}

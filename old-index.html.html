@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indeed Clone - Advanced Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #2d2d2d;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background-color: #085ff7;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        nav a {
+            color: white;
+            margin-left: 25px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #e0e0e0;
+            text-decoration: underline;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: #e6f0fa;
+            padding: 50px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .hero h1 {
+            font-size: 32px;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+        .hero p {
+            font-size: 16px;
+            color: #4a4a4a;
+            margin: 10px 0;
+        }
+        .hero button {
+            margin: 10px;
+            margin-bottom: 20px;
+        }
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://via.placeholder.com/1200x400?text=Group+Image') no-repeat center;
+            background-size: cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        /* Main Content */
+        main {
+            display: flex;
+            gap: 30px;
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Trending Section */
+        .trending {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin: 0 auto 30px auto;
+            max-width: 600px;
+        }
+        .trending h3 {
+            font-size: 22px;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+        .trending ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+        .trending li {
+            margin: 10px 0;
+            position: relative;
+        }
+        .trending li:before {
+            content: "•";
+            color: #085ff7;
+            position: absolute;
+            left: -20px;
+            font-size: 18px;
+        }
+        .trending a {
+            color: #085ff7;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .trending a:hover {
+            text-decoration: underline;
+        }
+
+        /* Filters */
+        .filters {
+            width: 250px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        .filters h3 {
+            font-size: 20px;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+        .filters input, .filters select {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 14px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        /* Job Listings */
+        #job-listings {
+            flex-grow: 1;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        #job-listings h2 {
+            font-size: 24px;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+        }
+        #search {
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .job {
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            background: #fafafa;
+            transition: box-shadow 0.3s;
+        }
+        .job:hover {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .job h3 {
+            font-size: 20px;
+            color: #085ff7;
+            margin-bottom: 10px;
+        }
+        .job p {
+            font-size: 14px;
+            color: #4a4a4a;
+            margin: 5px 0;
+        }
+        .sponsored.basic { border-left: 5px solid #ccc; }
+        .sponsored.premium { border-left: 5px solid #ffd700; background: #fff9e6; }
+        .sponsored.featured { border-left: 10px solid #ff4500; background: #ffe4e1; }
+        .sponsored-tag {
+            background: #ff4500;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        /* Buttons */
+        .primary-btn {
+            background-color: #085ff7;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 12px 25px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .primary-btn:hover {
+            background-color: #064ac7;
+        }
+        .secondary-btn {
+            background-color: #f5f5f5;
+            color: #085ff7;
+            border: 1px solid #085ff7;
+            cursor: pointer;
+            padding: 12px 25px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .secondary-btn:hover {
+            background-color: #e0e0e0;
+        }
+        .edit-btn, .delete-btn {
+            background-color: #ff4444;
+            color: white;
+            padding: 8px 15px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .edit-btn:hover, .delete-btn:hover {
+            background-color: #cc0000;
+        }
+        .google-btn {
+            background-color: #fff;
+            color: #757575;
+            border: 1px solid #ddd;
+            padding: 12px 25px;
+            border-radius: 4px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        .google-btn:before {
+            content: url('https://www.google.com/favicon.ico');
+            width: 20px;
+            height: 20px;
+        }
+        .google-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Post Job Section */
+        #post-job {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        #post-job h2 {
+            font-size: 24px;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+        }
+        #post-job input, #post-job select, #post-job textarea {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 14px;
+        }
+        #post-job div {
+            margin: 15px 0;
+        }
+        #post-job label {
+            font-size: 14px;
+            margin-right: 15px;
+        }
+
+        /* Pagination */
+        #pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        #pagination button {
+            margin: 0 5px;
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        #pagination button:hover {
+            background-color: #f0f0f0;
+        }
+        #pagination button.active {
+            background-color: #085ff7;
+            color: white;
+            border-color: #085ff7;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 400px;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .modal-content h3 {
+            font-size: 22px;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+        }
+        .modal-content input {
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .modal-content p {
+            font-size: 14px;
+            color: #4a4a4a;
+            margin: 15px 0;
+        }
+        .modal-content a {
+            color: #085ff7;
+            text-decoration: none;
+        }
+        .modal-content a:hover {
+            text-decoration: underline;
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            color: #4a4a4a;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: #1a1a1a;
+        }
+        .login-options, #signup-section {
+            margin-top: 20px;
+        }
+
+        /* User Status */
+        #user-status {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #4a4a4a;
+        }
+        #user-status a {
+            color: #085ff7;
+            text-decoration: none;
+        }
+        #user-status a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: #085ff7;
+            color: white;
+            margin-top: 40px;
+        }
+        footer p {
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        footer ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        footer a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            main {
+                flex-direction: column;
+                padding: 20px;
+            }
+            .filters {
+                width: 100%;
+            }
+            #search {
+                width: 100%;
+            }
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            header {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+            nav a {
+                margin-left: 0;
+                margin-bottom: 10px;
+            }
+            .hero {
+                padding: 30px 20px;
+            }
+            .modal-content {
+                width: 90%;
+                max-width: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Indeed Clone</div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#reviews">Company Reviews</a>
+            <a href="#salaries">Find Salaries</a>
+            <a href="#signin" onclick="showGetStartedModal()">Sign In</a>
+            <a href="#postjob" onclick="toggleView('employer')">Employers / Post Job</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Indeed Clone!</h1>
+            <p>Create an account or sign in to see your personalized job recommendations.</p>
+            <button class="primary-btn" onclick="showGetStartedModal()">Get Started</button>
+            <button class="secondary-btn" onclick="showResumeModal()">Post Your Resume</button>
+            <button class="secondary-btn" onclick="toggleView('employer')">Post a Job on Indeed Clone</button>
+            <p>Indeed Clone helps people get jobs: Over 16 million stories shared</p>
+            <p>Indeed Clone también está disponible en español (coming soon!)</p>
+        </div>
+        <div class="hero-image"></div>
+    </section>
+
+    <section class="trending">
+        <h3>What's Trending on Indeed Clone</h3>
+        <ul>
+            <li><a href="#hiringlab">Hiring Lab</a></li>
+            <li><a href="#advice">Career Advice</a></li>
+            <li><a href="#browsejobs">Browse Jobs</a></li>
+            <li><a href="#browsecompanies">Browse Companies</a></li>
+            <li><a href="#salaries">Salaries</a></li>
+            <li><a href="#events">Indeed Events</a></li>
+            <li><a href="#work">Work at Indeed Clone</a></li>
+        </ul>
+    </section>
+
+    <main>
+        <aside class="filters">
+            <h3>Filters</h3>
+            <select id="category-filter" onchange="filterJobs()">
+                <option value="all">All Categories</option>
+                <option value="tech">Tech</option>
+                <option value="healthcare">Healthcare</option>
+                <option value="other">Other</option>
+            </select>
+            <input type="text" id="location-filter" placeholder="Location" onchange="filterJobs()">
+            <input type="number" id="salary-min" placeholder="Min Salary" onchange="filterJobs()">
+            <input type="number" id="salary-max" placeholder="Max Salary" onchange="filterJobs()">
+            <select id="job-type" onchange="filterJobs()">
+                <option value="all">All Types</option>
+                <option value="full-time">Full-Time</option>
+                <option value="part-time">Part-Time</option>
+            </select>
+        </aside>
+
+        <section id="job-listings">
+            <h2>Available Jobs</h2>
+            <input type="text" id="search" placeholder="Search jobs or companies..." list="suggestions" onkeyup="searchJobs()">
+            <datalist id="suggestions"></datalist>
+            <div id="jobs"></div>
+            <div id="pagination"></div>
+        </section>
+
+        <section id="post-job" class="hidden">
+            <h2>Post a Job</h2>
+            <form id="job-form">
+                <input type="text" id="job-title" placeholder="Job Title" required>
+                <input type="text" id="company" placeholder="Company" required>
+                <input type="text" id="location" placeholder="Location" required>
+                <select id="job-category" required>
+                    <option value="tech">Tech</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="other">Other</option>
+                </select>
+                <input type="number" id="salary" placeholder="Salary (optional)">
+                <select id="job-type-post" required>
+                    <option value="full-time">Full-Time</option>
+                    <option value="part-time">Part-Time</option>
+                </select>
+                <textarea id="description" placeholder="Job Description" required></textarea>
+                <input type="file" id="photo" accept="image/*" multiple>
+                <div>
+                    <input type="radio" id="basic" name="sponsorship" value="basic" checked>
+                    <label for="basic">Basic ($0)</label>
+                    <input type="radio" id="premium" name="sponsorship" value="premium">
+                    <label for="premium">Premium ($5)</label>
+                    <input type="radio" id="featured" name="sponsorship" value="featured">
+                    <label for="featured">Featured ($10)</label>
+                </div>
+                <button type="submit" class="primary-btn">Post Job</button>
+            </form>
+        </section>
+
+        <div id="get-started-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('get-started-modal')">×</span>
+                <div class="login-options">
+                    <h3>Log In</h3>
+                    <form id="login-form">
+                        <input type="email" id="login-email" placeholder="Email" required>
+                        <input type="password" id="login-password" placeholder="Password" required>
+                        <button type="submit" class="primary-btn" onclick="login(event)">Log In</button>
+                    </form>
+                    <button class="google-btn" onclick="googleLogin()">Log In with Google</button>
+                    <p>Don't have an account? <a href="#" onclick="showSignUp()">Sign Up</a></p>
+                </div>
+                <div id="signup-section" class="hidden">
+                    <h3>Create Account</h3>
+                    <form id="signup-form">
+                        <input type="email" id="signup-email" placeholder="Email" required>
+                        <input type="password" id="signup-password" placeholder="Password" required>
+                        <button type="submit" class="primary-btn" onclick="signup(event)">Sign Up</button>
+                    </form>
+                    <p>Already have an account? <a href="#" onclick="showLogin()">Log In</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="resume-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('resume-modal')">×</span>
+                <h3>Post Your Resume</h3>
+                <form>
+                    <input type="file" accept=".pdf,.doc,.docx" required>
+                    <button type="submit" class="primary-btn">Upload Resume</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 Indeed Clone. All rights reserved.</p>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#help">Help</a></li>
+            <li><a href="#esg">ESG at Indeed Clone</a></li>
+            <li><a href="#postjob">Post a Job</a></li>
+            <li><a href="#privacy">Your Privacy Choices</a></li>
+            <li><a href="#accessibility">Accessibility at Indeed Clone</a></li>
+            <li><a href="#adchoices">Privacy Center and Ad Choices</a></li>
+            <li><a href="#terms">Terms</a></li>
+            <li><a href="#countries">Countries</a></li>
+        </ul>
+    </footer>
+
+    <script>
+        let jobs = [];
+        const JOBS_PER_PAGE = 5;
+        let currentPage = 1;
+        let suggestions = ["tech", "healthcare", "developer", "nurse", "new york", "san francisco"];
+        let users = {};
+        let currentUser = null;
+
+        function addJob(event) {
+            event.preventDefault();
+            if (!isLoggedIn()) {
+                alert("Please log in to post a job!");
+                showGetStartedModal();
+                return;
+            }
+            const sponsorship = document.querySelector('input[name="sponsorship"]:checked').value;
+            const job = {
+                id: Date.now(),
+                title: document.getElementById('job-title').value,
+                company: document.getElementById('company').value,
+                location: document.getElementById('location').value.toLowerCase(),
+                category: document.getElementById('job-category').value,
+                salary: document.getElementById('salary').value || null,
+                jobType: document.getElementById('job-type-post').value,
+                description: document.getElementById('description').value,
+                sponsored: sponsorship,
+                photos: []
+            };
+            const photos = document.getElementById('photo').files;
+            for (let i = 0; i < photos.length; i++) {
+                job.photos.push(URL.createObjectURL(photos[i]));
+            }
+            jobs.push(job);
+            displayJobs();
+            closeModal();
+            document.getElementById('job-form').reset();
+        }
+
+        function displayJobs() {
+            const jobsDiv = document.getElementById('jobs');
+            jobsDiv.innerHTML = '<div class="loading">Loading...</div>';
+            setTimeout(() => {
+                jobsDiv.innerHTML = '';
+                const start = (currentPage - 1) * JOBS_PER_PAGE;
+                const end = start + JOBS_PER_PAGE;
+                const filteredJobs = jobs.filter(job => filterJobsByCriteria(job));
+                const paginatedJobs = filteredJobs.slice(start, end);
+
+                paginatedJobs.forEach((job, index) => {
+                    const globalIndex = start + index;
+                    const div = document.createElement('div');
+                    div.className = `job sponsored ${job.sponsored}`;
+                    div.innerHTML = `
+                        <h3>${job.title} - ${job.company} ${job.sponsored !== 'basic' ? `<span class="sponsored-tag">${job.sponsored.toUpperCase()}</span>` : ''}</h3>
+                        <p><strong>Location:</strong> ${job.location}</p>
+                        <p><strong>Category:</strong> ${job.category}</p>
+                        <p><strong>Salary:</strong> $${job.salary || 'N/A'}</p>
+                        <p><strong>Type:</strong> ${job.jobType}</p>
+                        <p>${job.description}</p>
+                        ${job.photos.map(photo => `<img src="${photo}" style="max-width: 200px; margin: 5px 0;">`).join('')}
+                        <button class="edit-btn" onclick="editJob(${job.id})">Edit</button>
+                        <button class="delete-btn" onclick="deleteJob(${globalIndex})">Delete</button>
+                    `;
+                    jobsDiv.appendChild(div);
+                });
+
+                updatePagination(filteredJobs.length);
+            }, 500);
+        }
+
+        function deleteJob(index) {
+            jobs.splice(index, 1);
+            displayJobs();
+        }
+
+        function editJob(id) {
+            const job = jobs.find(j => j.id === id);
+            if (job && isLoggedIn()) {
+                document.getElementById('edit-title').value = job.title;
+                document.getElementById('edit-company').value = job.company;
+                document.getElementById('edit-location').value = job.location;
+                document.getElementById('edit-category').value = job.category;
+                document.getElementById('edit-salary').value = job.salary || '';
+                document.getElementById('edit-job-type').value = job.jobType;
+                document.getElementById('edit-description').value = job.description;
+                document.querySelector(`#edit-${job.sponsored}`).checked = true;
+                openModal('edit');
+                document.getElementById('edit-form').onsubmit = (e) => {
+                    e.preventDefault();
+                    saveEdit(id);
+                };
+            } else {
+                alert("Please log in to edit jobs!");
+                showGetStartedModal();
+            }
+        }
+
+        function saveEdit(id) {
+            const job = jobs.find(j => j.id === id);
+            if (job) {
+                job.title = document.getElementById('edit-title').value;
+                job.company = document.getElementById('edit-company').value;
+                job.location = document.getElementById('edit-location').value.toLowerCase();
+                job.category = document.getElementById('edit-category').value;
+                job.salary = document.getElementById('edit-salary').value || null;
+                job.jobType = document.getElementById('edit-job-type').value;
+                job.description = document.getElementById('edit-description').value;
+                job.sponsored = document.querySelector('input[name="edit-sponsorship"]:checked').value;
+                const photos = document.getElementById('edit-photo').files;
+                if (photos.length > 0) {
+                    job.photos = [];
+                    for (let i = 0; i < photos.length; i++) {
+                        job.photos.push(URL.createObjectURL(photos[i]));
+                    }
+                }
+                closeModal('edit');
+                displayJobs();
+            }
+        }
+
+        function filterJobs() {
+            currentPage = 1;
+            displayJobs();
+        }
+
+        function filterJobsByCriteria(job) {
+            const search = document.getElementById('search').value.toLowerCase();
+            const category = document.getElementById('category-filter').value;
+            const location = document.getElementById('location-filter').value.toLowerCase();
+            const minSalary = document.getElementById('salary-min').value || 0;
+            const maxSalary = document.getElementById('salary-max').value || Infinity;
+            const jobType = document.getElementById('job-type').value;
+
+            const salaryMatch = !job.salary || (job.salary >= minSalary && job.salary <= maxSalary);
+            const typeMatch = jobType === 'all' || job.jobType === jobType;
+            const categoryMatch = category === 'all' || job.category === category;
+            const locationMatch = location === 'all' || job.location.includes(location);
+            const searchMatch = job.title.toLowerCase().includes(search) || job.company.toLowerCase().includes(search) || job.description.toLowerCase().includes(search);
+
+            return salaryMatch && typeMatch && categoryMatch && locationMatch && searchMatch;
+        }
+
+        function searchJobs() {
+            const query = document.getElementById('search').value.toLowerCase();
+            const suggestionsList = document.getElementById('suggestions');
+            suggestionsList.innerHTML = '';
+            const filteredSuggestions = suggestions.filter(s => s.toLowerCase().includes(query))
+                .map(s => `<option value="${s}">`);
+            suggestionsList.innerHTML = filteredSuggestions.join('');
+            currentPage = 1;
+            displayJobs();
+        }
+
+        function updatePagination(totalJobs) {
+            const totalPages = Math.ceil(totalJobs / JOBS_PER_PAGE);
+            const paginationDiv = document.getElementById('pagination');
+            paginationDiv.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.onclick = () => { currentPage = i; displayJobs(); };
+                if (i === currentPage) button.style.backgroundColor = '#0a66c2';
+                paginationDiv.appendChild(button);
+            }
+        }
+
+        function toggleView(role = document.getElementById('role').value) {
+            const postJob = document.getElementById('post-job');
+            postJob.classList.toggle('hidden', role === 'seeker');
+            if (role === 'admin') {
+                alert('Admin mode activated! Add moderation logic later.');
+            }
+        }
+
+        function showGetStartedModal() {
+            openModal('get-started-modal');
+            document.getElementById('signup-section').classList.add('hidden');
+            document.querySelector('.login-options').classList.remove('hidden');
+        }
+
+        function showSignUp() {
+            document.querySelector('.login-options').classList.add('hidden');
+            document.getElementById('signup-section').classList.remove('hidden');
+        }
+
+        function showLogin() {
+            document.getElementById('signup-section').classList.add('hidden');
+            document.querySelector('.login-options').classList.remove('hidden');
+        }
+
+        function login(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            if (email && password && users[email] && users[email].password === password) {
+                users[email].loggedIn = true;
+                currentUser = email;
+                updateUserStatus();
+                alert(`Logged in as ${email}!`);
+                closeModal('get-started-modal');
+            } else {
+                alert("Invalid email or password!");
+            }
+        }
+
+        function signup(event) {
+            event.preventDefault();
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            if (email && password && !users[email]) {
+                users[email] = { password, loggedIn: true };
+                currentUser = email;
+                updateUserStatus();
+                alert(`Account created for ${email}!`);
+                closeModal('get-started-modal');
+            } else if (users[email]) {
+                alert("Email already in use!");
+            } else {
+                alert("Please fill all fields!");
+            }
+        }
+
+        function googleLogin() {
+            alert("Google Login simulated! (Real integration with Firebase coming soon)");
+            const email = "googleuser@example.com";
+            users[email] = { password: "google", loggedIn: true };
+            currentUser = email;
+            updateUserStatus();
+            closeModal('get-started-modal');
+        }
+
+        function updateUserStatus() {
+            const userStatus = document.getElementById('user-status');
+            if (currentUser) {
+                userStatus.classList.remove('hidden');
+                userStatus.innerHTML = `Logged in as ${currentUser} | <a href="#" onclick="logout()">Log Out</a>`;
+            } else {
+                userStatus.classList.add('hidden');
+                userStatus.innerHTML = '';
+            }
+        }
+
+        function logout() {
+            if (currentUser) {
+                users[currentUser].loggedIn = false;
+                currentUser = null;
+                updateUserStatus();
+                alert("Logged out successfully!");
+            }
+        }
+
+        function showResumeModal() {
+            openModal('resume-modal');
+        }
+
+        function openModal(type) {
+            document.getElementById(`${type}-modal`).style.display = 'block';
+        }
+
+        function closeModal(type) {
+            document.querySelectorAll('.modal').forEach(modal => modal.style.display = 'none');
+        }
+
+        function isLoggedIn() {
+            return !!currentUser;
+        }
+
+        // Initial setup
+        displayJobs();
+        toggleView();
+        document.getElementById('job-form').onsubmit = addJob;
+        document.getElementById('edit-form').onsubmit = (e) => e.preventDefault();
+        updateUserStatus();
+    </script>
+</body>
+</html>
