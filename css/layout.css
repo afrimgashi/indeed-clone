@@ -1,7 +1,7 @@
 .header {
     background: var(--gradient);
     color: white;
-    padding: 0.5rem 1rem; /* Reduced padding */
+    padding: 1rem 2rem; /* Increased padding for desktop */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -10,39 +10,39 @@
     top: 0;
     z-index: 100;
     transition: all 0.3s ease;
-    height: 50px; /* Fixed height for mobile */
+    height: 60px; /* Slightly taller for desktop */
 }
 
 .header.scrolled {
-    padding: 0.3rem 0.8rem; /* Even smaller when scrolled */
-    height: 40px;
+    padding: 0.8rem 1.5rem;
+    height: 50px;
 }
 
 .logo {
-    font-size: 1rem; /* Smaller logo */
+    font-size: 1.5rem; /* Larger logo on desktop */
     display: flex;
     align-items: center;
-    gap: 0.3rem;
+    gap: 0.5rem;
 }
 
 .nav {
     display: flex;
-    gap: 0.8rem;
+    gap: 1.5rem; /* More spacing on desktop */
     align-items: center;
 }
 
 .main-container {
     display: grid;
-    grid-template-columns: 1fr 3fr;
-    gap: 1.5rem;
+    grid-template-columns: 1fr 3fr; /* Balanced for desktop */
+    gap: 2rem;
     max-width: 1400px;
-    margin: 1.5rem auto;
-    padding: 0 1.5rem;
+    margin: 2rem auto;
+    padding: 0 2rem;
 }
 
 .footer {
     background: var(--gradient);
     color: white;
-    padding: 1.5rem;
+    padding: 2rem;
     text-align: center;
 }
