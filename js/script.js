@@ -38,8 +38,11 @@ function setupMobileMenu() {
 
 function handleScroll() {
     const header = document.querySelector('.header');
-    if (window.scrollY > 50) header.classList.add('scrolled');
-    else header.classList.remove('scrolled');
+    if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
 }
 
 function updateUserStatus() {
@@ -145,6 +148,7 @@ document.querySelectorAll('.smooth-scroll').forEach(anchor => {
     anchor.addEventListener('click', (e) => {
         e.preventDefault();
         document.querySelector(anchor.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+        if (window.innerWidth <= 768) document.querySelector('.nav').classList.remove('active');
     });
 });
 
