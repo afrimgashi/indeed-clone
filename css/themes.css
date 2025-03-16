@@ -1,24 +1,25 @@
 body {
-    --primary-color: #085ff7;
-    --secondary-color: #ffffff;
-    --text-color: #ffffff;
-    --bg-color: #085ff7;
+    --primary-color: #1E3A8A;
+    --secondary-color: #F5F5F5;
+    --accent-color: #38BDF8;
+    --bg-color: #0F172A;
+    --card-bg: #1C2526;
     --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    --gradient: linear-gradient(135deg, #085ff7, #4a90e2);
-    --glass-bg: rgba(255, 255, 255, 0.1);
+    --gradient: linear-gradient(135deg, #1E3A8A, #38BDF8);
+    --glass-bg: rgba(245, 245, 245, 0.1);
 }
 
 body .widget,
 body .job-card,
 body .filters,
 body .job-listings {
-    background: #4a90e2; /* Lighter blue */
-    color: var(--text-color);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: var(--card-bg);
+    color: var(--secondary-color);
+    border-color: var(--accent-color);
 }
 
 body .carousel-item,
 body .tag {
-    background: #085ff7; /* Blue */
-    color: var(--text-color);
+    background: var(--primary-color);
+    color: var(--secondary-color);
 }

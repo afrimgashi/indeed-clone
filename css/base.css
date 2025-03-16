@@ -1,16 +1,17 @@
 :root {
-    --primary-color: #085ff7; /* Blue */
-    --secondary-color: #ffffff; /* White */
-    --text-color: #ffffff; /* White */
-    --bg-color: #085ff7; /* Blue */
+    --primary-color: #1E3A8A; /* Deep Blue */
+    --secondary-color: #F5F5F5; /* Soft White */
+    --accent-color: #38BDF8; /* Sky Blue */
+    --bg-color: #0F172A; /* Dark Navy */
+    --card-bg: #1C2526; /* Light Navy */
     --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    --gradient: linear-gradient(135deg, #085ff7, #4a90e2); /* Blue gradient */
-    --glass-bg: rgba(255, 255, 255, 0.1); /* White with transparency */
+    --gradient: linear-gradient(135deg, #1E3A8A, #38BDF8); /* Deep Blue to Sky Blue */
+    --glass-bg: rgba(245, 245, 245, 0.1); /* Soft White with transparency */
 }
 
 body {
     background-color: var(--bg-color);
-    color: var(--text-color);
+    color: var(--secondary-color);
     line-height: 1.6;
     overflow-x: hidden;
 }
@@ -22,5 +23,5 @@ a {
 
 a:hover {
     text-decoration: underline;
-    color: #ffffff;
+    color: var(--accent-color);
 }

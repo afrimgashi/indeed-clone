@@ -30,15 +30,32 @@
             <a href="dashboard.html" class="nav-link">Dashboard</a>
             <a href="#signin" class="nav-link btn-signin" onclick="showLoginModal()">Sign In</a>
             <a href="#postjob" class="nav-link btn-postjob" onclick="showPostJob()">Post Job</a>
+            <div class="profile-dropdown">
+                <button class="profile-btn"><i class="fas fa-user"></i></button>
+                <div class="dropdown-content hidden">
+                    <a href="#" onclick="logout()">Logout</a>
+                </div>
+            </div>
         </nav>
         <button class="mobile-menu-toggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
     </header>
+
+    <div class="notification hidden">
+        <p>New job posted: <strong>Software Engineer</strong> at TechStar!</p>
+        <button onclick="closeNotification()"><i class="fas fa-times"></i></button>
+    </div>
 
     <section class="hero parallax">
         <div class="hero-content">
             <h1>Discover Your Next Career</h1>
             <p>Unlock opportunities with advanced job tools.</p>
             <div class="hero-search-container">
+                <select class="category-select" id="hero-category-filter" onchange="filterJobs()">
+                    <option value="all">All Categories</option>
+                    <option value="tech">Tech</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="finance">Finance</option>
+                </select>
                 <input type="text" class="search-bar hero-search" id="hero-search" placeholder="Search" list="search-suggestions" aria-label="Search jobs">
                 <datalist id="search-suggestions"></datalist>
                 <button class="btn btn-primary" onclick="searchJobs()">Search</button>
@@ -102,6 +119,13 @@
         <p>75+ jobs posted today!</p>
     </section>
 
+    <section class="applications widget fade-in">
+        <h2>Your Applications</h2>
+        <div id="applications-list">
+            <p>No applications yet.</p>
+        </div>
+    </section>
+
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-links">
@@ -121,6 +145,8 @@
             <p>© 2025 Indeed Clone</p>
         </div>
     </footer>
+
+    <button class="back-to-top hidden" onclick="scrollToTop()"><i class="fas fa-arrow-up"></i></button>
 
     <div class="modal hidden" id="job-details-modal">
         <div class="modal-content slide-in">

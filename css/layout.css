@@ -1,6 +1,6 @@
 .header {
     background: var(--gradient);
-    color: var(--dark-text);
+    color: var(--secondary-color);
     padding: 1rem 2rem;
     display: flex;
     justify-content: center;
@@ -32,6 +32,39 @@
     align-items: center;
 }
 
+.profile-dropdown {
+    position: relative;
+}
+
+.profile-btn {
+    background: transparent;
+    border: none;
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: var(--primary-color);
+    border-radius: 5px;
+    box-shadow: var(--shadow);
+    padding: 0.5rem;
+    z-index: 100;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: var(--secondary-color);
+}
+
+.dropdown-content a:hover {
+    background: var(--accent-color);
+}
+
 .main-container {
     display: grid;
     grid-template-columns: 1fr 3fr;
@@ -43,7 +76,7 @@
 
 .footer {
     background: var(--gradient);
-    color: var(--dark-text);
+    color: var(--secondary-color);
     padding: 1rem;
     text-align: center;
     display: flex;
@@ -62,4 +95,26 @@
 .footer-links {
     display: flex;
     gap: 1rem;
+}
+
+.notification {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: var(--card-bg);
+    color: var(--secondary-color);
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 99;
+}
+
+.notification button {
+    background: transparent;
+    border: none;
+    color: var(--secondary-color);
+    cursor: pointer;
 }

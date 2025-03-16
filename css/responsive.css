@@ -28,8 +28,8 @@
 
     .job-card {
         padding: 2rem;
-        background: #4a90e2; /* Blue */
-        color: var(--text-color); /* White */
+        background: var(--card-bg);
+        color: var(--secondary-color);
     }
 
     .filters {
@@ -38,6 +38,11 @@
 
     .job-listings {
         padding: 2rem;
+    }
+
+    .notification {
+        right: 20px;
+        top: 80px;
     }
 }
 
@@ -51,8 +56,8 @@
     }
 
     .job-card {
-        background: #4a90e2; /* Blue */
-        color: var(--text-color); /* White */
+        background: var(--card-bg);
+        color: var(--secondary-color);
     }
 }
 
@@ -90,7 +95,7 @@
         background: none;
         border: none;
         font-size: 1.2rem;
-        color: var(--text-color);
+        color: var(--secondary-color);
         cursor: pointer;
         padding: 0.3rem;
     }
@@ -120,6 +125,12 @@
         width: 100%;
     }
 
+    .category-select {
+        width: 100%;
+        padding: 0.6rem;
+        font-size: 1rem;
+    }
+
     .hero-search, .btn {
         width: 100%;
         padding: 0.6rem;
@@ -129,16 +140,16 @@
     .filters {
         padding: 1rem;
         margin-bottom: 1rem;
-        background: #4a90e2; /* Blue */
-        color: var(--text-color); /* White */
+        background: var(--card-bg);
+        color: var(--secondary-color);
     }
 
     .filters .toggle-filters {
         display: block;
         padding: 0.5rem;
         font-size: 1rem;
-        background: #085ff7; /* Blue */
-        color: var(--text-color); /* White */
+        background: var(--primary-color);
+        color: var(--secondary-color);
     }
 
     .filter-content {
@@ -151,18 +162,25 @@
 
     .job-listings {
         padding: 1rem;
-        background: #4a90e2; /* Blue */
-        color: var(--text-color); /* White */
+        background: var(--card-bg);
+        color: var(--secondary-color);
     }
 
     .job-card {
         padding: 1rem;
-        background: #4a90e2; /* Blue */
-        color: var(--text-color); /* White */
+        background: var(--card-bg);
+        color: var(--secondary-color);
     }
 
     .category-grid {
         grid-template-columns: 1fr;
+    }
+
+    .notification {
+        top: 60px;
+        right: 10px;
+        width: 90%;
+        margin: 0 auto;
     }
 }
 

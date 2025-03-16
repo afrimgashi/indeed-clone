@@ -8,42 +8,44 @@
     align-items: center;
     gap: 0.5rem;
     background: var(--gradient);
-    color: var(--text-color);
+    color: var(--secondary-color);
     border: none;
 }
 
 .btn:hover {
-    background: #064ac7;
+    background: var(--accent-color);
     transform: scale(1.05);
 }
 
 .btn-secondary {
     background: transparent;
-    color: var(--text-color);
-    border: 1px solid var(--secondary-color);
+    color: var(--secondary-color);
+    border: 1px solid var(--accent-color);
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--glass-bg);
+    transform: scale(1.05);
 }
 
 .job-card {
-    background: #4a90e2;
+    background: var(--card-bg);
     backdrop-filter: blur(10px);
     border-radius: 10px;
     padding: 1.5rem;
     box-shadow: var(--shadow);
     transition: transform 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: var(--text-color);
+    border: 1px solid var(--accent-color);
+    color: var(--secondary-color);
 }
 
 .job-card:hover {
     transform: translateY(-5px);
+    border-color: var(--secondary-color);
 }
 
 .job-card.featured {
-    border-left: 5px solid #ffffff; /* White */
+    border-left: 5px solid var(--accent-color);
 }
 
 .tags {
@@ -54,9 +56,31 @@
 }
 
 .tag {
-    background: #085ff7;
-    color: var(--text-color);
+    background: var(--primary-color);
+    color: var(--secondary-color);
     padding: 0.3rem 0.6rem;
     border-radius: 15px;
     font-size: 0.8rem;
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--accent-color);
+    color: var(--secondary-color);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-to-top:hover {
+    background: var(--primary-color);
+    transform: scale(1.1);
 }

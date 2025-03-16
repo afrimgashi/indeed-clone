@@ -1,13 +1,13 @@
 .widget {
-    background: #4a90e2;
+    background: var(--card-bg);
     backdrop-filter: blur(10px);
     padding: 1.5rem;
     border-radius: 10px;
     box-shadow: var(--shadow);
     margin: 2rem auto;
     max-width: 1400px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: var(--text-color);
+    border: 1px solid var(--accent-color);
+    color: var(--secondary-color);
 }
 
 .carousel {
@@ -18,17 +18,17 @@
 }
 
 .carousel-item {
-    background: #085ff7;
+    background: var(--primary-color);
     padding: 0.5rem 1rem;
     border-radius: 20px;
     transition: all 0.3s ease;
     white-space: nowrap;
-    color: var(--text-color);
+    color: var(--secondary-color);
 }
 
 .carousel-item:hover {
-    background: #064ac7;
-    color: white;
+    background: var(--accent-color);
+    color: var(--secondary-color);
 }
 
 .featured-jobs .carousel-item {

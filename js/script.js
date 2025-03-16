@@ -6,6 +6,8 @@ let jobs = JSON.parse(localStorage.getItem('jobs')) || [
     { id: 5, title: "Medical Assistant", company: "MediCare", location: "Los Angeles", salary: "$60k", tags: ["Part-Time", "Healthcare"], featured: false, description: "Assist doctors with patient care." }
 ];
 let currentUser = localStorage.getItem('currentUser') || null;
+let savedJobs = JSON.parse(localStorage.getItem('savedJobs')) || [];
+let applications = JSON.parse(localStorage.getItem('applications')) || [];
 const JOBS_PER_PAGE = 5;
 let currentPage = 1;
 const suggestions = ["tech", "healthcare", "finance", "developer", "nurse", "new york", "remote"];
@@ -14,9 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
     updateUserStatus();
     renderJobs();
     renderFeaturedJobs();
+    renderApplications();
     setupMobileMenu();
     setupFilterToggle();
-    setupStickySearch();
+    setupProfileDropdown();
+    setupBackToTop();
+    showNotification();
     window.addEventListener('scroll', handleScroll);
 });
 
@@ -43,15 +48,46 @@ function setupFilterToggle() {
     }
 }
 
-function setupStickySearch() {
-    const stickySearch = document.querySelector('.sticky-search');
+function setupProfileDropdown() {
+    const profileBtn = document.querySelector('.profile-btn');
+    const dropdown = document.querySelector('.dropdown-content');
+    if (profileBtn) {
+        profileBtn.addEventListener('click', () => {
+            dropdown.classList.toggle('hidden');
+        });
+        document.addEventListener('click', (e) => {
+            if (!profileBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+    }
+}
+
+function setupBackToTop() {
+    const backToTop = document.querySelector('.back-to-top');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 300) {
-            stickySearch.classList.add('active');
+            backToTop.classList.remove('hidden');
         } else {
-            stickySearch.classList.remove('active');
+            backToTop.classList.add('hidden');
         }
     });
+}
+
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showNotification() {
+    const notification = document.querySelector('.notification');
+    setTimeout(() => {
+        notification.classList.remove('hidden');
+    }, 2000);
+}
+
+function closeNotification() {
+    const notification = document.querySelector('.notification');
+    notification.classList.add('hidden');
 }
 
 function handleScroll() {
@@ -62,8 +98,14 @@ function handleScroll() {
 
 function updateUserStatus() {
     const signinBtn = document.querySelector('.btn-signin');
-    if (currentUser) signinBtn.classList.add('hidden');
-    else signinBtn.classList.remove('hidden');
+    const profileDropdown = document.querySelector('.profile-dropdown');
+    if (currentUser) {
+        signinBtn.classList.add('hidden');
+        profileDropdown.classList.remove('hidden');
+    } else {
+        signinBtn.classList.remove('hidden');
+        profileDropdown.classList.add('hidden');
+    }
 }
 
 function showLoginModal() {
@@ -91,8 +133,26 @@ function showJobDetails(id) {
         <p>${job.salary}</p>
         <p>${job.description}</p>
         <div class="tags">${job.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
+        <button class="btn btn-secondary mt-20" onclick="saveJob(${job.id})">${savedJobs.includes(job.id) ? 'Unsave Job' : 'Save Job'}</button>
     `;
     modal.classList.remove('hidden');
+}
+
+function saveJob(id) {
+    if (!currentUser) {
+        alert('Please sign in to save jobs!');
+        return;
+    }
+    const index = savedJobs.indexOf(id);
+    if (index === -1) {
+        savedJobs.push(id);
+        alert('Job saved!');
+    } else {
+        savedJobs.splice(index, 1);
+        alert('Job unsaved!');
+    }
+    localStorage.setItem('savedJobs', JSON.stringify(savedJobs));
+    showJobDetails(id);
 }
 
 function closeModal(id) {
@@ -101,8 +161,18 @@ function closeModal(id) {
 
 document.getElementById('apply-form').addEventListener('submit', (e) => {
     e.preventDefault();
+    const jobId = parseInt(document.getElementById('job-details-content').dataset.jobId);
+    const application = {
+        jobId,
+        name: document.getElementById('applicant-name').value,
+        email: document.getElementById('applicant-email').value,
+        status: 'Pending'
+    };
+    applications.push(application);
+    localStorage.setItem('applications', JSON.stringify(applications));
     alert('Application submitted!');
     closeModal('job-details-modal');
+    renderApplications();
 });
 
 document.getElementById('job-form').addEventListener('submit', (e) => {
@@ -161,8 +231,22 @@ function renderFeaturedJobs() {
     `).join('');
 }
 
+function renderApplications() {
+    const applicationsList = document.getElementById('applications-list');
+    applicationsList.innerHTML = applications.length === 0 ? '<p>No applications yet.</p>' : applications.map(app => {
+        const job = jobs.find(j => j.id === app.jobId);
+        return job ? `
+            <div class="application-item">
+                <p><strong>${job.title}</strong> at ${job.company}</p>
+                <p>Status: ${app.status}</p>
+            </div>
+        ` : '';
+    }).join('');
+}
+
 function filterJobs() {
     const query = document.getElementById('hero-search').value.toLowerCase();
+    const heroCategory = document.getElementById('hero-category-filter').value;
     const category = document.getElementById('category-filter').value;
     const location = document.getElementById('location-filter').value.toLowerCase();
     const salary = parseInt(document.getElementById('salary-range').value);
@@ -170,7 +254,7 @@ function filterJobs() {
 
     return jobs.filter(job => {
         const salaryMatch = !job.salary.includes('$') || parseInt(job.salary.replace(/\D/g, '')) * 1000 >= salary;
-        const categoryMatch = category === 'all' || job.tags.includes(category);
+        const categoryMatch = (category === 'all' && heroCategory === 'all') || job.tags.includes(category) || job.tags.includes(heroCategory);
         const locationMatch = !location || job.location.toLowerCase().includes(location);
         const remoteMatch = !remote || job.tags.includes('remote');
         const searchMatch = !query || job.title.toLowerCase().includes(query) || job.company.toLowerCase().includes(query);
@@ -215,6 +299,13 @@ function updateSuggestions() {
     const query = document.getElementById('hero-search').value.toLowerCase();
     const datalist = document.getElementById('search-suggestions');
     datalist.innerHTML = suggestions.filter(s => s.includes(query)).map(s => `<option value="${s}">`).join('');
+}
+
+function logout() {
+    currentUser = null;
+    localStorage.removeItem('currentUser');
+    updateUserStatus();
+    alert('Logged out!');
 }
 
 document.querySelectorAll('.smooth-scroll').forEach(anchor => {
