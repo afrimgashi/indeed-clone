@@ -23,8 +23,16 @@ document.querySelector('.theme-toggle').addEventListener('click', () => {
 });
 
 function setupMobileMenu() {
-    document.querySelector('.mobile-menu-toggle').addEventListener('click', () => {
-        document.querySelector('.nav').classList.toggle('active');
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const nav = document.querySelector('.nav');
+    toggle.addEventListener('click', () => {
+        nav.classList.toggle('active');
+    });
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!nav.contains(e.target) && !toggle.contains(e.target) && nav.classList.contains('active')) {
+            nav.classList.remove('active');
+        }
     });
 }
 
@@ -42,8 +50,8 @@ function updateUserStatus() {
         signinBtn.classList.add('hidden');
         document.getElementById('user-email').textContent = currentUser;
     } else {
-        profile.classList.remove('hidden');
-        signinBtn.classList.add('hidden');
+        profile.classList.add('hidden');
+        signinBtn.classList.remove('hidden');
     }
 }
 

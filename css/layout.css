@@ -1,7 +1,7 @@
 .header {
     background: var(--gradient);
     color: white;
-    padding: 1rem 2rem;
+    padding: 0.75rem 1.5rem; /* Reduced padding */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -12,24 +12,35 @@
     transition: all 0.3s ease;
 }
 
+.header.scrolled {
+    padding: 0.5rem 1rem; /* Even smaller when scrolled */
+}
+
+.logo {
+    font-size: 1.2rem; /* Smaller logo */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .nav {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
     align-items: center;
 }
 
 .main-container {
     display: grid;
     grid-template-columns: 1fr 3fr;
-    gap: 2rem;
+    gap: 1.5rem;
     max-width: 1400px;
-    margin: 2rem auto;
-    padding: 0 2rem;
+    margin: 1.5rem auto;
+    padding: 0 1.5rem;
 }
 
 .footer {
     background: var(--gradient);
     color: white;
-    padding: 2rem;
+    padding: 1.5rem;
     text-align: center;
 }
