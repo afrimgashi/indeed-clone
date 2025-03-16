@@ -11,7 +11,6 @@ let currentPage = 1;
 const suggestions = ["tech", "healthcare", "finance", "developer", "nurse", "new york", "remote"];
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadTheme();
     updateUserStatus();
     renderJobs();
     renderFeaturedJobs();
@@ -19,17 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setupFilterToggle();
     setupStickySearch();
     window.addEventListener('scroll', handleScroll);
-});
-
-function loadTheme() {
-    if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-mode');
-}
-
-document.querySelector('.theme-toggle').addEventListener('click', () => {
-    document.body.classList.toggle('light-mode');
-    localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
-    document.querySelector('.theme-toggle i').classList.toggle('fa-sun');
-    document.querySelector('.theme-toggle i').classList.toggle('fa-moon');
 });
 
 function setupMobileMenu() {
