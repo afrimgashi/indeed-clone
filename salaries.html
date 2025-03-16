@@ -30,11 +30,11 @@
             <a href="categories.html" class="nav-link">Categories</a>
             <a href="dashboard.html" class="nav-link">Dashboard</a>
             <a href="signin.html" class="nav-link btn-signin">Sign In</a>
-            <a href="#postjob" class="nav-link btn-postjob">Post Job</a>
             <div class="profile-dropdown">
                 <button class="profile-btn"><i class="fas fa-user"></i></button>
                 <div class="dropdown-content hidden">
                     <a href="#" onclick="logout()">Logout</a>
+                    <a href="#" onclick="switchRole()">Switch Role</a>
                 </div>
             </div>
         </nav>
@@ -48,43 +48,27 @@
             <form id="salary-calculator-form">
                 <select id="salary-role" required>
                     <option value="">Select Role</option>
-                    <option value="web-developer">Web Developer</option>
-                    <option value="nurse">Nurse Practitioner</option>
-                    <option value="financial-analyst">Financial Analyst</option>
                 </select>
                 <input type="text" id="salary-location" placeholder="Location" required>
                 <button type="submit" class="btn btn-primary">Calculate</button>
             </form>
             <div id="salary-result" class="hidden">
-                <p>Estimated Salary: <strong>$80,000/year</strong></p>
+                <p>Estimated Salary: <strong>$0/year</strong></p>
             </div>
         </div>
 
         <div class="salary-comparison widget fade-in">
             <h2>Salary Comparison</h2>
-            <div class="comparison-table">
-                <div class="comparison-item">
-                    <h3>Web Developer</h3>
-                    <p>New York: $80k</p>
-                    <p>Boston: $75k</p>
-                </div>
-                <div class="comparison-item">
-                    <h3>Nurse Practitioner</h3>
-                    <p>New York: $90k</p>
-                    <p>Boston: $85k</p>
-                </div>
-                <div class="comparison-item">
-                    <h3>Financial Analyst</h3>
-                    <p>New York: $85k</p>
-                    <p>Boston: $80k</p>
-                </div>
+            <div class="comparison-table" id="comparison-table">
+                <p>Loading salary data...</p>
             </div>
         </div>
 
         <div class="salary-trends widget fade-in">
             <h2>Salary Trends</h2>
-            <p>Tech roles have seen a 10% salary increase in 2025.</p>
-            <p>Healthcare salaries are projected to rise by 5% next year.</p>
+            <div id="salary-trends">
+                <p>Loading trends...</p>
+            </div>
         </div>
     </section>
 

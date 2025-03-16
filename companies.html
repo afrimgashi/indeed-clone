@@ -30,11 +30,11 @@
             <a href="categories.html" class="nav-link">Categories</a>
             <a href="dashboard.html" class="nav-link">Dashboard</a>
             <a href="signin.html" class="nav-link btn-signin">Sign In</a>
-            <a href="#postjob" class="nav-link btn-postjob">Post Job</a>
             <div class="profile-dropdown">
                 <button class="profile-btn"><i class="fas fa-user"></i></button>
                 <div class="dropdown-content hidden">
                     <a href="#" onclick="logout()">Logout</a>
+                    <a href="#" onclick="switchRole()">Switch Role</a>
                 </div>
             </div>
         </nav>
@@ -47,26 +47,23 @@
             <input type="text" id="company-search" placeholder="Search companies..." oninput="filterCompanies()">
         </div>
         <div class="company-grid" id="company-grid">
-            <div class="company-card">
-                <h2>TechStar</h2>
-                <p>Leading tech company with a focus on innovation.</p>
-                <p><strong>Open Positions:</strong> 10</p>
-                <button class="btn btn-primary" onclick="followCompany('techstar')">Follow</button>
-            </div>
-            <div class="company-card">
-                <h2>HealthCare Inc</h2>
-                <p>Providing top-notch healthcare services.</p>
-                <p><strong>Open Positions:</strong> 5</p>
-                <button class="btn btn-primary" onclick="followCompany('healthcare-inc')">Follow</button>
-            </div>
-            <div class="company-card">
-                <h2>FinanceCorp</h2>
-                <p>Financial services and consulting.</p>
-                <p><strong>Open Positions:</strong> 8</p>
-                <button class="btn btn-primary" onclick="followCompany('financecorp')">Follow</button>
-            </div>
+            <div class="loading-spinner hidden"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
         </div>
+        <button class="btn btn-primary" onclick="showCompanyForm()">Add Company</button>
     </section>
+
+    <div class="modal hidden" id="company-form-modal">
+        <div class="modal-content slide-in">
+            <span class="close" onclick="closeModal('company-form-modal')">×</span>
+            <h2>Add Company</h2>
+            <form id="company-form">
+                <input type="text" id="company-name" placeholder="Company Name" required>
+                <textarea id="company-description" placeholder="Description" required></textarea>
+                <input type="number" id="company-positions" placeholder="Open Positions" required>
+                <button type="submit" class="btn btn-primary">Add Company</button>
+            </form>
+        </div>
+    </div>
 
     <footer class="footer">
         <div class="footer-content">

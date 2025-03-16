@@ -30,11 +30,11 @@
             <a href="categories.html" class="nav-link">Categories</a>
             <a href="#dashboard" class="nav-link">Dashboard</a>
             <a href="signin.html" class="nav-link btn-signin">Sign In</a>
-            <a href="#postjob" class="nav-link btn-postjob">Post Job</a>
             <div class="profile-dropdown">
                 <button class="profile-btn"><i class="fas fa-user"></i></button>
                 <div class="dropdown-content hidden">
                     <a href="#" onclick="logout()">Logout</a>
+                    <a href="#" onclick="switchRole()">Switch Role</a>
                 </div>
             </div>
         </nav>
@@ -47,6 +47,7 @@
             <h2>User Profile</h2>
             <p><strong>Name:</strong> <span id="user-name">Guest</span></p>
             <p><strong>Email:</strong> <span id="user-email">guest@example.com</span></p>
+            <p><strong>Role:</strong> <span id="user-role">Individual</span></p>
         </div>
 
         <div class="saved-jobs widget fade-in">
@@ -66,20 +67,8 @@
         <div class="recommendations widget fade-in">
             <h2>Recommended Jobs</h2>
             <div class="jobs-grid" id="recommended-jobs">
-                <div class="job-card">
-                    <h3>Software Engineer</h3>
-                    <p>TechStar - San Francisco</p>
-                    <p>$120k</p>
-                    <div class="tags"><span class="tag">Full-Time</span><span class="tag">Tech</span></div>
-                    <button class="btn btn-primary mt-20" onclick="showJobDetails(4)">View Details</button>
-                </div>
+                <p>Loading recommendations...</p>
             </div>
-        </div>
-
-        <div class="analytics widget fade-in">
-            <h2>Search Analytics</h2>
-            <p><strong>Most Searched Role:</strong> Web Developer</p>
-            <p><strong>Top Location:</strong> New York</p>
         </div>
     </section>
 

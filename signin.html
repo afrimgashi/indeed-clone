@@ -30,11 +30,11 @@
             <a href="categories.html" class="nav-link">Categories</a>
             <a href="dashboard.html" class="nav-link">Dashboard</a>
             <a href="signin.html" class="nav-link btn-signin">Sign In</a>
-            <a href="#postjob" class="nav-link btn-postjob">Post Job</a>
             <div class="profile-dropdown">
                 <button class="profile-btn"><i class="fas fa-user"></i></button>
                 <div class="dropdown-content hidden">
                     <a href="#" onclick="logout()">Logout</a>
+                    <a href="#" onclick="switchRole()">Switch Role</a>
                 </div>
             </div>
         </nav>
@@ -45,6 +45,10 @@
         <h1>Sign In</h1>
         <div class="auth-form widget fade-in">
             <form id="signin-form">
+                <select id="user-role" required>
+                    <option value="individual">Individual</option>
+                    <option value="company">Company</option>
+                </select>
                 <input type="email" id="signin-email" placeholder="Email" required>
                 <input type="password" id="signin-password" placeholder="Password" required>
                 <button type="submit" class="btn btn-primary">Sign In</button>
@@ -56,6 +60,11 @@
         <div class="auth-form widget fade-in hidden" id="signup-form-container">
             <h2>Sign Up</h2>
             <form id="signup-form">
+                <select id="signup-role" required>
+                    <option value="individual">Individual</option>
+                    <option value="company">Company</option>
+                </select>
+                <input type="text" id="signup-name" placeholder="Name" required>
                 <input type="email" id="signup-email" placeholder="Email" required>
                 <input type="password" id="signup-password" placeholder="Password" required>
                 <button type="submit" class="btn btn-primary">Sign Up</button>

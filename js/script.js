@@ -1,18 +1,10 @@
-let jobs = JSON.parse(localStorage.getItem('jobs')) || [
-    { id: 1, title: "Web Developer", company: "CodeCo", location: "New York", salary: "$80k", tags: ["Full-Time", "Tech"], featured: false, description: "Build and maintain web applications.", experience: "Mid", type: "Full-Time" },
-    { id: 2, title: "Nurse Practitioner", company: "HealthCare Inc", location: "Boston", salary: "$90k", tags: ["Full-Time", "Healthcare"], featured: true, description: "Provide patient care in a hospital setting.", experience: "Senior", type: "Full-Time" },
-    { id: 3, title: "Financial Analyst", company: "FinanceCorp", location: "Chicago", salary: "$85k", tags: ["Full-Time", "Finance"], featured: false, description: "Analyze financial data and trends.", experience: "Entry", type: "Full-Time" },
-    { id: 4, title: "Software Engineer", company: "TechStar", location: "San Francisco", salary: "$120k", tags: ["Full-Time", "Tech", "Remote"], featured: true, description: "Develop scalable software solutions.", experience: "Senior", type: "Full-Time" },
-    { id: 5, title: "Medical Assistant", company: "MediCare", location: "Los Angeles", salary: "$60k", tags: ["Part-Time", "Healthcare"], featured: false, description: "Assist doctors with patient care.", experience: "Entry", type: "Part-Time" }
-];
+let jobs = JSON.parse(localStorage.getItem('jobs')) || [];
 let currentUser = localStorage.getItem('currentUser') || null;
+let userRole = localStorage.getItem('userRole') || 'individual';
 let savedJobs = JSON.parse(localStorage.getItem('savedJobs')) || [];
 let applications = JSON.parse(localStorage.getItem('applications')) || [];
-let reviews = JSON.parse(localStorage.getItem('reviews')) || [
-    { company: "techstar", rating: 5, text: "Great company culture and opportunities for growth.", author: "Alex M." },
-    { company: "healthcare-inc", rating: 4, text: "Supportive team, but long hours.", author: "Emily R." },
-    { company: "financecorp", rating: 3, text: "Good pay, but management needs improvement.", author: "John D." }
-];
+let reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+let companies = JSON.parse(localStorage.getItem('companies')) || [];
 let followedCompanies = JSON.parse(localStorage.getItem('followedCompanies')) || [];
 const JOBS_PER_PAGE = 5;
 let currentPage = 1;
@@ -33,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showNotification();
     setupForms();
     window.addEventListener('scroll', handleScroll);
+    populateFilters();
 });
 
 function setupMobileMenu() {
@@ -88,17 +81,22 @@ function setupForms() {
     const signinForm = document.getElementById('signin-form');
     const signupForm = document.getElementById('signup-form');
     const reviewForm = document.getElementById('review-form');
+    const jobForm = document.getElementById('job-form');
+    const companyForm = document.getElementById('company-form');
     const salaryForm = document.getElementById('salary-calculator-form');
 
     if (signinForm) {
         signinForm.addEventListener('submit', (e) => {
             e.preventDefault();
+            const role = document.getElementById('user-role').value;
             const email = document.getElementById('signin-email').value;
             const password = document.getElementById('signin-password').value;
             const users = JSON.parse(localStorage.getItem('users')) || {};
             if (users[email] && users[email].password === password) {
                 currentUser = email;
+                userRole = users[email].role;
                 localStorage.setItem('currentUser', currentUser);
+                localStorage.setItem('userRole', userRole);
                 updateUserStatus();
                 window.location.href = 'index.html';
             } else {
@@ -110,14 +108,18 @@ function setupForms() {
     if (signupForm) {
         signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
+            const role = document.getElementById('signup-role').value;
+            const name = document.getElementById('signup-name').value;
             const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-password').value;
             const users = JSON.parse(localStorage.getItem('users')) || {};
             if (!users[email]) {
-                users[email] = { password, name: email.split('@')[0] };
+                users[email] = { password, name, role };
                 localStorage.setItem('users', JSON.stringify(users));
                 currentUser = email;
+                userRole = role;
                 localStorage.setItem('currentUser', currentUser);
+                localStorage.setItem('userRole', userRole);
                 updateUserStatus();
                 window.location.href = 'index.html';
             } else {
@@ -134,24 +136,88 @@ function setupForms() {
                 return;
             }
             const review = {
+                id: Date.now(),
                 company: document.getElementById('review-company').value,
                 rating: parseInt(document.getElementById('review-rating').value),
                 text: document.getElementById('review-text').value,
-                author: currentUser.split('@')[0]
+                author: currentUser.split('@')[0],
+                timestamp: new Date().toISOString()
             };
             reviews.push(review);
             localStorage.setItem('reviews', JSON.stringify(reviews));
             closeModal('review-form-modal');
             renderReviews();
+            populateFilters();
+        });
+    }
+
+    if (jobForm) {
+        jobForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (!currentUser || userRole !== 'company') {
+                alert('Only companies can post jobs! Please sign in as a company.');
+                return;
+            }
+            const job = {
+                id: Date.now(),
+                title: document.getElementById('job-title').value,
+                company: document.getElementById('job-company').value,
+                location: document.getElementById('job-location').value,
+                salary: document.getElementById('job-salary').value,
+                tags: [document.getElementById('job-category').value],
+                featured: false,
+                description: document.getElementById('job-description').value,
+                experience: document.getElementById('job-experience').value,
+                type: document.getElementById('job-type').value,
+                remote: document.getElementById('job-remote').checked,
+                companyId: currentUser,
+                timestamp: new Date().toISOString()
+            };
+            jobs.push(job);
+            localStorage.setItem('jobs', JSON.stringify(jobs));
+            closeModal('post-job-modal');
+            renderJobs();
+            showNotification(`New job posted: ${job.title} at ${job.company}!`);
+        });
+    }
+
+    if (companyForm) {
+        companyForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (!currentUser || userRole !== 'company') {
+                alert('Only companies can add company profiles!');
+                return;
+            }
+            const company = {
+                id: Date.now(),
+                name: document.getElementById('company-name').value,
+                description: document.getElementById('company-description').value,
+                positions: parseInt(document.getElementById('company-positions').value),
+                companyId: currentUser,
+                timestamp: new Date().toISOString()
+            };
+            companies.push(company);
+            localStorage.setItem('companies', JSON.stringify(companies));
+            closeModal('company-form-modal');
+            renderCompanies();
+            populateFilters();
         });
     }
 
     if (salaryForm) {
         salaryForm.addEventListener('submit', (e) => {
             e.preventDefault();
+            const role = document.getElementById('salary-role').value;
+            const location = document.getElementById('salary-location').value;
             const result = document.getElementById('salary-result');
+            const salaryData = {
+                'web-developer': { 'new york': 80000, 'boston': 75000 },
+                'nurse': { 'new york': 90000, 'boston': 85000 },
+                'financial-analyst': { 'new york': 85000, 'boston': 80000 }
+            };
+            const estimatedSalary = salaryData[role] && salaryData[role][location.toLowerCase()] || 0;
             result.classList.remove('hidden');
-            result.innerHTML = `<p>Estimated Salary: <strong>$80,000/year</strong></p>`;
+            result.innerHTML = `<p>Estimated Salary: <strong>$${estimatedSalary}/year</strong></p>`;
         });
     }
 }
@@ -160,12 +226,14 @@ function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function showNotification() {
+function showNotification(message) {
     const notification = document.querySelector('.notification');
     if (notification) {
+        notification.querySelector('p').textContent = message;
+        notification.classList.remove('hidden');
         setTimeout(() => {
-            notification.classList.remove('hidden');
-        }, 2000);
+            notification.classList.add('hidden');
+        }, 5000);
     }
 }
 
@@ -185,26 +253,32 @@ function updateUserStatus() {
     const profileDropdown = document.querySelector('.profile-dropdown');
     const userName = document.getElementById('user-name');
     const userEmail = document.getElementById('user-email');
+    const userRoleElement = document.getElementById('user-role');
+    const users = JSON.parse(localStorage.getItem('users')) || {};
     if (currentUser) {
         signinBtn.classList.add('hidden');
         profileDropdown.classList.remove('hidden');
-        if (userName && userEmail) {
-            userName.textContent = currentUser.split('@')[0];
+        if (userName && userEmail && userRoleElement) {
+            userName.textContent = users[currentUser].name || currentUser.split('@')[0];
             userEmail.textContent = currentUser;
+            userRoleElement.textContent = userRole.charAt(0).toUpperCase() + userRole.slice(1);
         }
     } else {
         signinBtn.classList.remove('hidden');
         profileDropdown.classList.add('hidden');
-        if (userName && userEmail) {
+        if (userName && userEmail && userRoleElement) {
             userName.textContent = 'Guest';
             userEmail.textContent = 'guest@example.com';
+            userRoleElement.textContent = 'Individual';
         }
     }
 }
 
 function socialLogin(provider) {
     currentUser = provider + 'user@example.com';
+    userRole = 'individual';
     localStorage.setItem('currentUser', currentUser);
+    localStorage.setItem('userRole', userRole);
     updateUserStatus();
     window.location.href = 'index.html';
 }
@@ -213,18 +287,24 @@ function showLoginModal() {
     window.location.href = 'signin.html';
 }
 
-function showPostJob() {
-    if (!currentUser) {
-        alert('Please sign in to post a job!');
-        showLoginModal();
-    } else {
-        document.getElementById('post-job').classList.toggle('hidden');
-        document.querySelector('.job-listings').classList.toggle('hidden');
+function showPostJobModal() {
+    if (!currentUser || userRole !== 'company') {
+        alert('Only companies can post jobs! Please sign in as a company.');
+        window.location.href = 'signin.html';
+        return;
     }
+    const modal = document.getElementById('post-job-modal');
+    modal.classList.remove('hidden');
 }
 
 function showReviewForm() {
+    if (!currentUser) {
+        alert('Please sign in to submit a review!');
+        window.location.href = 'signin.html';
+        return;
+    }
     const modal = document.getElementById('review-form-modal');
+    populateCompanyDropdown();
     modal.classList.remove('hidden');
 }
 
@@ -236,6 +316,16 @@ function showSigninForm() {
 function showSignupForm() {
     document.querySelector('.auth-form').classList.add('hidden');
     document.getElementById('signup-form-container').classList.remove('hidden');
+}
+
+function showCompanyForm() {
+    if (!currentUser || userRole !== 'company') {
+        alert('Only companies can add company profiles!');
+        window.location.href = 'signin.html';
+        return;
+    }
+    const modal = document.getElementById('company-form-modal');
+    modal.classList.remove('hidden');
 }
 
 function showJobDetails(id) {
@@ -258,6 +348,7 @@ function showJobDetails(id) {
 function saveJob(id) {
     if (!currentUser) {
         alert('Please sign in to save jobs!');
+        window.location.href = 'signin.html';
         return;
     }
     const index = savedJobs.indexOf(id);
@@ -279,12 +370,20 @@ function closeModal(id) {
 
 document.getElementById('apply-form').addEventListener('submit', (e) => {
     e.preventDefault();
+    if (!currentUser) {
+        alert('Please sign in to apply!');
+        window.location.href = 'signin.html';
+        return;
+    }
     const jobId = parseInt(document.getElementById('job-details-content').dataset.jobId);
     const application = {
+        id: Date.now(),
         jobId,
+        userId: currentUser,
         name: document.getElementById('applicant-name').value,
         email: document.getElementById('applicant-email').value,
-        status: 'Pending'
+        status: 'Pending',
+        timestamp: new Date().toISOString()
     };
     applications.push(application);
     localStorage.setItem('applications', JSON.stringify(applications));
@@ -295,25 +394,53 @@ document.getElementById('apply-form').addEventListener('submit', (e) => {
 
 document.getElementById('job-form').addEventListener('submit', (e) => {
     e.preventDefault();
-    if (!currentUser) return;
+    if (!currentUser || userRole !== 'company') {
+        alert('Only companies can post jobs! Please sign in as a company.');
+        window.location.href = 'signin.html';
+        return;
+    }
     const job = {
         id: Date.now(),
         title: document.getElementById('job-title').value,
-        company: document.getElementById('company').value,
-        location: document.getElementById('location').value,
-        salary: "$80k",
-        tags: ["New"],
+        company: document.getElementById('job-company').value,
+        location: document.getElementById('job-location').value,
+        salary: document.getElementById('job-salary').value,
+        tags: [document.getElementById('job-category').value],
         featured: false,
-        description: "Job description placeholder.",
-        experience: "Mid",
-        type: "Full-Time"
+        description: document.getElementById('job-description').value,
+        experience: document.getElementById('job-experience').value,
+        type: document.getElementById('job-type').value,
+        remote: document.getElementById('job-remote').checked,
+        companyId: currentUser,
+        timestamp: new Date().toISOString()
     };
     jobs.push(job);
     localStorage.setItem('jobs', JSON.stringify(jobs));
-    document.getElementById('job-form').reset();
-    document.getElementById('post-job').classList.add('hidden');
-    document.querySelector('.job-listings').classList.remove('hidden');
+    closeModal('post-job-modal');
     renderJobs();
+    showNotification(`New job posted: ${job.title} at ${job.company}!`);
+});
+
+document.getElementById('company-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!currentUser || userRole !== 'company') {
+        alert('Only companies can add company profiles!');
+        window.location.href = 'signin.html';
+        return;
+    }
+    const company = {
+        id: Date.now(),
+        name: document.getElementById('company-name').value,
+        description: document.getElementById('company-description').value,
+        positions: parseInt(document.getElementById('company-positions').value),
+        companyId: currentUser,
+        timestamp: new Date().toISOString()
+    };
+    companies.push(company);
+    localStorage.setItem('companies', JSON.stringify(companies));
+    closeModal('company-form-modal');
+    renderCompanies();
+    populateFilters();
 });
 
 function renderJobs() {
@@ -362,9 +489,19 @@ function renderApplications() {
             <div class="application-item">
                 <p><strong>${job.title}</strong> at ${job.company}</p>
                 <p>Status: ${app.status}</p>
+                <button class="btn btn-secondary mt-20" onclick="updateApplicationStatus(${app.id}, 'Reviewed')">Mark Reviewed</button>
             </div>
         ` : '';
     }).join('');
+}
+
+function updateApplicationStatus(appId, status) {
+    const appIndex = applications.findIndex(a => a.id === appId);
+    if (appIndex !== -1) {
+        applications[appIndex].status = status;
+        localStorage.setItem('applications', JSON.stringify(applications));
+        renderApplications();
+    }
 }
 
 function renderSavedJobs() {
@@ -390,21 +527,28 @@ function renderReviews() {
     if (!reviewList) return;
     const companyFilter = document.getElementById('company-filter').value;
     const ratingFilter = document.getElementById('rating-filter').value;
-    const filteredReviews = reviews.filter(review => {
-        const companyMatch = companyFilter === 'all' || review.company === companyFilter;
-        const ratingMatch = ratingFilter === 'all' || review.rating === parseInt(ratingFilter);
-        return companyMatch && ratingMatch;
-    });
-    reviewList.innerHTML = filteredReviews.map(review => `
-        <div class="review-card fade-in">
-            <h2>${review.company.charAt(0).toUpperCase() + review.company.slice(1)}</h2>
-            <div class="rating">
-                ${Array(review.rating).fill('<i class="fas fa-star"></i>').join('')}${Array(5 - review.rating).fill('<i class="far fa-star"></i>').join('')}
+    const spinner = reviewList.querySelector('.loading-spinner');
+    spinner.classList.remove('hidden');
+    reviewList.style.opacity = '0.5';
+    setTimeout(() => {
+        spinner.classList.add('hidden');
+        reviewList.style.opacity = '1';
+        const filteredReviews = reviews.filter(review => {
+            const companyMatch = companyFilter === 'all' || review.company === companyFilter;
+            const ratingMatch = ratingFilter === 'all' || review.rating === parseInt(ratingFilter);
+            return companyMatch && ratingMatch;
+        });
+        reviewList.innerHTML = filteredReviews.map(review => `
+            <div class="review-card fade-in">
+                <h2>${review.company.charAt(0).toUpperCase() + review.company.slice(1)}</h2>
+                <div class="rating">
+                    ${Array(review.rating).fill('<i class="fas fa-star"></i>').join('')}${Array(5 - review.rating).fill('<i class="far fa-star"></i>').join('')}
+                </div>
+                <p>"${review.text}"</p>
+                <span>— ${review.author}</span>
             </div>
-            <p>"${review.text}"</p>
-            <span>— ${review.author}</span>
-        </div>
-    `).join('') || '<p>No reviews found.</p>';
+        `).join('') || '<p>No reviews found.</p>';
+    }, 1000);
 }
 
 function filterReviews() {
@@ -414,21 +558,23 @@ function filterReviews() {
 function renderCompanies() {
     const companyGrid = document.getElementById('company-grid');
     if (!companyGrid) return;
-    const companies = [
-        { name: 'TechStar', description: 'Leading tech company with a focus on innovation.', positions: 10, id: 'techstar' },
-        { name: 'HealthCare Inc', description: 'Providing top-notch healthcare services.', positions: 5, id: 'healthcare-inc' },
-        { name: 'FinanceCorp', description: 'Financial services and consulting.', positions: 8, id: 'financecorp' }
-    ];
-    const query = document.getElementById('company-search') ? document.getElementById('company-search').value.toLowerCase() : '';
-    const filteredCompanies = companies.filter(company => company.name.toLowerCase().includes(query));
-    companyGrid.innerHTML = filteredCompanies.map(company => `
-        <div class="company-card fade-in">
-            <h2>${company.name}</h2>
-            <p>${company.description}</p>
-            <p><strong>Open Positions:</strong> ${company.positions}</p>
-            <button class="btn btn-primary" onclick="followCompany('${company.id}')">${followedCompanies.includes(company.id) ? 'Unfollow' : 'Follow'}</button>
-        </div>
-    `).join('') || '<p>No companies found.</p>';
+    const spinner = companyGrid.querySelector('.loading-spinner');
+    spinner.classList.remove('hidden');
+    companyGrid.style.opacity = '0.5';
+    setTimeout(() => {
+        spinner.classList.add('hidden');
+        companyGrid.style.opacity = '1';
+        const query = document.getElementById('company-search') ? document.getElementById('company-search').value.toLowerCase() : '';
+        const filteredCompanies = companies.filter(company => company.name.toLowerCase().includes(query));
+        companyGrid.innerHTML = filteredCompanies.map(company => `
+            <div class="company-card fade-in">
+                <h2>${company.name}</h2>
+                <p>${company.description}</p>
+                <p><strong>Open Positions:</strong> ${company.positions}</p>
+                <button class="btn btn-primary" onclick="followCompany('${company.id}')">${followedCompanies.includes(company.id) ? 'Unfollow' : 'Follow'}</button>
+            </div>
+        `).join('') || '<p>No companies found.</p>';
+    }, 1000);
 }
 
 function filterCompanies() {
@@ -438,6 +584,7 @@ function filterCompanies() {
 function followCompany(companyId) {
     if (!currentUser) {
         alert('Please sign in to follow companies!');
+        window.location.href = 'signin.html';
         return;
     }
     const index = followedCompanies.indexOf(companyId);
@@ -452,6 +599,21 @@ function followCompany(companyId) {
     renderCompanies();
 }
 
+function populateFilters() {
+    const companyFilter = document.getElementById('company-filter');
+    const reviewCompany = document.getElementById('review-company');
+    if (companyFilter && reviewCompany) {
+        const uniqueCompanies = [...new Set(companies.map(c => c.name))];
+        companyFilter.innerHTML = '<option value="all">All Companies</option>' + uniqueCompanies.map(c => `<option value="${c.toLowerCase()}">${c}</option>`).join('');
+        reviewCompany.innerHTML = '<option value="">Select Company</option>' + uniqueCompanies.map(c => `<option value="${c.toLowerCase()}">${c}</option>`).join('');
+    }
+    const salaryRole = document.getElementById('salary-role');
+    if (salaryRole) {
+        const uniqueRoles = [...new Set(jobs.map(j => j.title.toLowerCase()))];
+        salaryRole.innerHTML = '<option value="">Select Role</option>' + uniqueRoles.map(r => `<option value="${r}">${r.charAt(0).toUpperCase() + r.slice(1)}</option>`).join('');
+    }
+}
+
 function filterJobs() {
     const query = document.getElementById('hero-search').value.toLowerCase();
     const heroCategory = document.getElementById('hero-category-filter').value;
@@ -463,10 +625,10 @@ function filterJobs() {
     const jobType = document.getElementById('job-type-filter') ? document.getElementById('job-type-filter').value : 'all';
 
     return jobs.filter(job => {
-        const salaryMatch = !job.salary.includes('$') || parseInt(job.salary.replace(/\D/g, '')) * 1000 >= salary;
+        const salaryMatch = !job.salary || parseInt(job.salary.replace(/\D/g, '')) * 1000 >= salary;
         const categoryMatch = (category === 'all' && heroCategory === 'all') || job.tags.includes(category) || job.tags.includes(heroCategory);
         const locationMatch = !location || job.location.toLowerCase().includes(location);
-        const remoteMatch = !remote || job.tags.includes('remote');
+        const remoteMatch = !remote || job.remote;
         const searchMatch = !query || job.title.toLowerCase().includes(query) || job.company.toLowerCase().includes(query);
         const experienceMatch = experience === 'all' || job.experience.toLowerCase() === experience;
         const typeMatch = jobType === 'all' || job.type.toLowerCase() === jobType;
@@ -491,7 +653,7 @@ function updatePagination(totalJobs) {
 function sortJobs() {
     const sort = document.getElementById('sort-filter').value;
     jobs.sort((a, b) => {
-        if (sort === 'date') return b.id - a.id;
+        if (sort === 'date') return new Date(b.timestamp) - new Date(a.timestamp);
         if (sort === 'salary') return parseInt(b.salary.replace(/\D/g, '')) - parseInt(a.salary.replace(/\D/g, ''));
         return 0;
     });
@@ -511,9 +673,18 @@ function updateSuggestions() {
 
 function logout() {
     currentUser = null;
+    userRole = 'individual';
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('userRole');
     updateUserStatus();
     window.location.href = 'index.html';
+}
+
+function switchRole() {
+    userRole = userRole === 'individual' ? 'company' : 'individual';
+    localStorage.setItem('userRole', userRole);
+    updateUserStatus();
+    window.location.href = 'dashboard.html';
 }
 
 document.querySelectorAll('.smooth-scroll').forEach(anchor => {

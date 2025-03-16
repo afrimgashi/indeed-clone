@@ -30,11 +30,11 @@
             <a href="categories.html" class="nav-link">Categories</a>
             <a href="dashboard.html" class="nav-link">Dashboard</a>
             <a href="signin.html" class="nav-link btn-signin">Sign In</a>
-            <a href="#postjob" class="nav-link btn-postjob">Post Job</a>
             <div class="profile-dropdown">
                 <button class="profile-btn"><i class="fas fa-user"></i></button>
                 <div class="dropdown-content hidden">
                     <a href="#" onclick="logout()">Logout</a>
+                    <a href="#" onclick="switchRole()">Switch Role</a>
                 </div>
             </div>
         </nav>
@@ -46,42 +46,18 @@
         <div class="review-filter">
             <select id="company-filter" onchange="filterReviews()">
                 <option value="all">All Companies</option>
-                <option value="techstar">TechStar</option>
-                <option value="healthcare-inc">HealthCare Inc</option>
-                <option value="financecorp">FinanceCorp</option>
             </select>
             <select id="rating-filter" onchange="filterReviews()">
                 <option value="all">All Ratings</option>
                 <option value="5">5 Stars</option>
                 <option value="4">4 Stars</option>
                 <option value="3">3 Stars</option>
+                <option value="2">2 Stars</option>
+                <option value="1">1 Star</option>
             </select>
         </div>
         <div class="review-list" id="review-list">
-            <div class="review-card">
-                <h2>TechStar</h2>
-                <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                </div>
-                <p>"Great company culture and opportunities for growth."</p>
-                <span>— Alex M.</span>
-            </div>
-            <div class="review-card">
-                <h2>HealthCare Inc</h2>
-                <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
-                </div>
-                <p>"Supportive team, but long hours."</p>
-                <span>— Emily R.</span>
-            </div>
-            <div class="review-card">
-                <h2>FinanceCorp</h2>
-                <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
-                </div>
-                <p>"Good pay, but management needs improvement."</p>
-                <span>— John D.</span>
-            </div>
+            <div class="loading-spinner hidden"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
         </div>
         <button class="btn btn-primary" onclick="showReviewForm()">Write a Review</button>
     </section>
@@ -93,9 +69,6 @@
             <form id="review-form">
                 <select id="review-company" required>
                     <option value="">Select Company</option>
-                    <option value="techstar">TechStar</option>
-                    <option value="healthcare-inc">HealthCare Inc</option>
-                    <option value="financecorp">FinanceCorp</option>
                 </select>
                 <div class="rating-input">
                     <label for="review-rating">Rating:</label>

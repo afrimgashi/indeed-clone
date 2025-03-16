@@ -30,11 +30,11 @@
             <a href="categories.html" class="nav-link">Categories</a>
             <a href="dashboard.html" class="nav-link">Dashboard</a>
             <a href="signin.html" class="nav-link btn-signin">Sign In</a>
-            <a href="#postjob" class="nav-link btn-postjob" onclick="showPostJob()">Post Job</a>
             <div class="profile-dropdown">
                 <button class="profile-btn"><i class="fas fa-user"></i></button>
                 <div class="dropdown-content hidden">
                     <a href="#" onclick="logout()">Logout</a>
+                    <a href="#" onclick="switchRole()">Switch Role</a>
                 </div>
             </div>
         </nav>
@@ -42,7 +42,7 @@
     </header>
 
     <div class="notification hidden">
-        <p>New job posted: <strong>Software Engineer</strong> at TechStar!</p>
+        <p>New job posted: <strong>[Job Title]</strong> at [Company]!</p>
         <button onclick="closeNotification()"><i class="fas fa-times"></i></button>
     </div>
 
@@ -60,29 +60,8 @@
                 <input type="text" class="search-bar hero-search" id="hero-search" placeholder="Search" list="search-suggestions" aria-label="Search jobs">
                 <datalist id="search-suggestions"></datalist>
                 <button class="btn btn-primary" onclick="searchJobs()">Search</button>
-                <button class="btn btn-secondary" onclick="showPostJob()">Post a Job</button>
             </div>
-        </div>
-    </section>
-
-    <section class="job-categories widget fade-in">
-        <h2>Explore Job Categories</h2>
-        <div class="carousel">
-            <div class="carousel-item category-item">
-                <i class="fas fa-laptop-code"></i>
-                <h3>Tech</h3>
-                <a href="categories.html?category=tech">Browse</a>
-            </div>
-            <div class="carousel-item category-item">
-                <i class="fas fa-heartbeat"></i>
-                <h3>Healthcare</h3>
-                <a href="categories.html?category=healthcare">Browse</a>
-            </div>
-            <div class="carousel-item category-item">
-                <i class="fas fa-chart-line"></i>
-                <h3>Finance</h3>
-                <a href="categories.html?category=finance">Browse</a>
-            </div>
+            <button class="btn btn-secondary mt-20" onclick="showPostJobModal()">Post a Job</button>
         </div>
     </section>
 
@@ -150,50 +129,6 @@
         <div class="carousel" id="featured-jobs-carousel"></div>
     </section>
 
-    <section class="featured-companies widget fade-in">
-        <h2>Featured Companies</h2>
-        <div class="carousel">
-            <div class="carousel-item company-item">
-                <h3>TechStar</h3>
-                <p>10 Open Positions</p>
-                <a href="companies.html?company=techstar">View</a>
-            </div>
-            <div class="carousel-item company-item">
-                <h3>HealthCare Inc</h3>
-                <p>5 Open Positions</p>
-                <a href="companies.html?company=healthcare-inc">View</a>
-            </div>
-            <div class="carousel-item company-item">
-                <h3>FinanceCorp</h3>
-                <p>8 Open Positions</p>
-                <a href="companies.html?company=financecorp">View</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="testimonials widget fade-in">
-        <h2>What Our Users Say</h2>
-        <div class="carousel">
-            <div class="carousel-item testimonial-item">
-                <p>"Found my dream job in tech within a week!"</p>
-                <h3>— Sarah K.</h3>
-            </div>
-            <div class="carousel-item testimonial-item">
-                <p>"The salary comparison tool helped me negotiate a better offer."</p>
-                <h3>— John D.</h3>
-            </div>
-            <div class="carousel-item testimonial-item">
-                <p>"Best platform for healthcare jobs!"</p>
-                <h3>— Emily R.</h3>
-            </div>
-        </div>
-    </section>
-
-    <section class="job-stats widget fade-in">
-        <h2>Job Statistics</h2>
-        <p>75+ jobs posted today!</p>
-    </section>
-
     <section class="applications widget fade-in">
         <h2>Your Applications</h2>
         <div id="applications-list">
@@ -231,6 +166,38 @@
                 <input type="text" id="applicant-name" placeholder="Your Name" required>
                 <input type="email" id="applicant-email" placeholder="Your Email" required>
                 <button type="submit" class="btn btn-primary">Apply</button>
+            </form>
+            <button class="btn btn-secondary mt-20" onclick="saveJob(parseInt(document.getElementById('job-details-content').dataset.jobId))">Save Job</button>
+        </div>
+    </div>
+
+    <div class="modal hidden" id="post-job-modal">
+        <div class="modal-content slide-in">
+            <span class="close" onclick="closeModal('post-job-modal')">×</span>
+            <h2>Post a Job</h2>
+            <form id="job-form">
+                <input type="text" id="job-title" placeholder="Job Title" required>
+                <input type="text" id="job-company" placeholder="Company" required>
+                <input type="text" id="job-location" placeholder="Location" required>
+                <input type="text" id="job-salary" placeholder="Salary (e.g., $80k)" required>
+                <select id="job-category" required>
+                    <option value="tech">Tech</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="finance">Finance</option>
+                </select>
+                <select id="job-experience" required>
+                    <option value="entry">Entry</option>
+                    <option value="mid">Mid</option>
+                    <option value="senior">Senior</option>
+                </select>
+                <select id="job-type" required>
+                    <option value="full-time">Full-Time</option>
+                    <option value="part-time">Part-Time</option>
+                    <option value="contract">Contract</option>
+                </select>
+                <textarea id="job-description" placeholder="Job Description" required></textarea>
+                <label><input type="checkbox" id="job-remote"> Remote</label>
+                <button type="submit" class="btn btn-primary">Post Job</button>
             </form>
         </div>
     </div>
