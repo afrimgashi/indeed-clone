@@ -1,32 +1,33 @@
 @media (min-width: 1025px) {
     .header {
-        padding: 1rem 3rem; /* More padding for larger screens */
+        padding: 1rem 3rem;
         height: 70px;
     }
 
     .logo {
-        font-size: 1.8rem; /* Larger logo */
+        font-size: 1.8rem;
     }
 
     .nav {
-        gap: 2rem; /* More spacing */
+        gap: 2rem;
     }
 
     .main-container {
-        grid-template-columns: 1fr 3fr; /* Balanced for desktop */
+        grid-template-columns: 1fr 3fr;
         gap: 3rem;
     }
 
     .hero {
-        padding: 5rem 2rem; /* More spacious hero */
+        padding: 2rem 2rem; /* Consistent with desktop */
+        max-height: 300px; /* Limit height */
     }
 
     .hero-search-container {
-        max-width: 900px; /* Wider search bar */
+        max-width: 900px;
     }
 
     .job-card {
-        padding: 2rem; /* More spacious cards */
+        padding: 2rem;
     }
 
     .filters {
@@ -41,6 +42,10 @@
 @media (max-width: 1024px) {
     .main-container {
         grid-template-columns: 1fr 2fr;
+    }
+
+    .hero {
+        max-height: 250px; /* Slightly smaller for mid-sized screens */
     }
 }
 
@@ -93,6 +98,7 @@
 
     .hero {
         padding: 1rem 0.5rem;
+        max-height: 200px; /* Smaller on mobile */
     }
 
     .hero-search-container {
