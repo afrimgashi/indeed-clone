@@ -1,5 +1,5 @@
 let jobs = JSON.parse(localStorage.getItem('jobs')) || [
-    { id: 1, title: "Web Developer", company: "CodeCo", location: "New York", salary: "$80k", tags: ["Full-Time"] }
+    { id: 1, title: "Web Developer", company: "CodeCo", location: "New York", salary: "$80k", tags: ["Full-Time"], featured: false }
 ];
 let currentUser = localStorage.getItem('currentUser') || null;
 const JOBS_PER_PAGE = 5;
@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateUserStatus();
     renderJobs();
     setupMobileMenu();
+    setupFilterToggle();
     window.addEventListener('scroll', handleScroll);
 });
 
@@ -28,7 +29,6 @@ function setupMobileMenu() {
     toggle.addEventListener('click', () => {
         nav.classList.toggle('active');
     });
-    // Close menu when clicking outside
     document.addEventListener('click', (e) => {
         if (!nav.contains(e.target) && !toggle.contains(e.target) && nav.classList.contains('active')) {
             nav.classList.remove('active');
@@ -36,13 +36,20 @@ function setupMobileMenu() {
     });
 }
 
+function setupFilterToggle() {
+    const toggle = document.querySelector('.toggle-filters');
+    const content = document.querySelector('.filter-content');
+    if (toggle) {
+        toggle.addEventListener('click', () => {
+            content.classList.toggle('active');
+        });
+    }
+}
+
 function handleScroll() {
     const header = document.querySelector('.header');
-    if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
-    }
+    if (window.scrollY > 50) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
 }
 
 function updateUserStatus() {
@@ -58,20 +65,31 @@ function updateUserStatus() {
     }
 }
 
-document.querySelector('.btn-postjob').addEventListener('click', () => {
-    document.getElementById('post-job').classList.toggle('hidden');
-    document.querySelector('.job-listings').classList.toggle('hidden');
-});
+function showLoginModal() {
+    alert('Login modal coming soon!');
+}
+
+function showPostJob() {
+    if (!currentUser) {
+        alert('Please sign in to post a job!');
+        showLoginModal();
+    } else {
+        document.getElementById('post-job').classList.toggle('hidden');
+        document.querySelector('.job-listings').classList.toggle('hidden');
+    }
+}
 
 document.getElementById('job-form').addEventListener('submit', (e) => {
     e.preventDefault();
+    if (!currentUser) return;
     const job = {
         id: Date.now(),
         title: document.getElementById('job-title').value,
         company: document.getElementById('company').value,
         location: document.getElementById('location').value,
         salary: "$80k",
-        tags: ["New"]
+        tags: ["New"],
+        featured: false
     };
     jobs.push(job);
     localStorage.setItem('jobs', JSON.stringify(jobs));
@@ -91,7 +109,7 @@ function renderJobs() {
 
     paginatedJobs.forEach(job => {
         const jobCard = document.createElement('div');
-        jobCard.className = 'job-card fade-in';
+        jobCard.className = `job-card fade-in ${job.featured ? 'featured' : ''}`;
         jobCard.innerHTML = `
             <h3>${job.title}</h3>
             <p>${job.company} - ${job.location}</p>
@@ -135,6 +153,16 @@ function updatePagination(totalJobs) {
     }
 }
 
+function sortJobs() {
+    const sort = document.getElementById('sort-filter').value;
+    jobs.sort((a, b) => {
+        if (sort === 'date') return b.id - a.id;
+        if (sort === 'salary') return parseInt(b.salary.replace(/\D/g, '')) - parseInt(a.salary.replace(/\D/g, ''));
+        return 0;
+    });
+    renderJobs();
+}
+
 function searchJobs() {
     currentPage = 1;
     renderJobs();
@@ -151,7 +179,3 @@ document.querySelectorAll('.smooth-scroll').forEach(anchor => {
         if (window.innerWidth <= 768) document.querySelector('.nav').classList.remove('active');
     });
 });
-
-function subscribeToAlerts() {
-    document.getElementById('job-alerts').classList.toggle('hidden');
-}

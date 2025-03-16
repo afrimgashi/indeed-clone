@@ -1,12 +1,12 @@
 .btn {
-    padding: 0.5rem 1rem; /* Slightly smaller */
-    border-radius: 20px;
-    font-size: 0.9rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
-    gap: 0.3rem;
+    gap: 0.5rem;
 }
 
 .btn-primary {
@@ -32,8 +32,8 @@
 
 .job-card {
     background: white;
-    border-radius: 8px;
-    padding: 1rem;
+    border-radius: 10px;
+    padding: 1.5rem;
     box-shadow: var(--shadow);
     transition: transform 0.3s ease;
 }
@@ -42,17 +42,21 @@
     transform: translateY(-5px);
 }
 
+.job-card.featured {
+    border-left: 5px solid #ff4500;
+}
+
 .tags {
     display: flex;
-    gap: 0.3rem;
+    gap: 0.5rem;
     flex-wrap: wrap;
-    margin-top: 0.3rem;
+    margin-top: 0.5rem;
 }
 
 .tag {
     background: #e0e0e0;
     color: #4a4a4a;
-    padding: 0.2rem 0.4rem;
-    border-radius: 12px;
-    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
 }

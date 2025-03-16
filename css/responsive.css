@@ -18,8 +18,8 @@
     }
 
     .hero {
-        padding: 2rem 2rem; /* Consistent with desktop */
-        max-height: 300px; /* Limit height */
+        padding: 2rem 2rem;
+        max-height: 300px;
     }
 
     .hero-search-container {
@@ -45,7 +45,7 @@
     }
 
     .hero {
-        max-height: 250px; /* Slightly smaller for mid-sized screens */
+        max-height: 250px;
     }
 }
 
@@ -87,10 +87,6 @@
         padding: 0.2rem;
     }
 
-    .header-search {
-        display: none;
-    }
-
     .main-container {
         grid-template-columns: 1fr;
         padding: 0.5rem;
@@ -98,7 +94,7 @@
 
     .hero {
         padding: 1rem 0.5rem;
-        max-height: 200px; /* Smaller on mobile */
+        max-height: 200px;
     }
 
     .hero-search-container {
@@ -112,9 +108,16 @@
         font-size: 0.9rem;
     }
 
-    .filters {
-        position: static;
-        padding: 0.8rem;
+    .filters .toggle-filters {
+        display: block;
+    }
+
+    .filter-content {
+        display: none;
+    }
+
+    .filter-content.active {
+        display: block;
     }
 
     .job-listings {

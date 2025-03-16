@@ -4,7 +4,7 @@
     border-radius: 10px;
     box-shadow: var(--shadow);
     margin: 2rem auto;
-    max-width: 1200px;
+    max-width: 1400px;
 }
 
 .carousel {
@@ -19,6 +19,7 @@
     padding: 0.5rem 1rem;
     border-radius: 20px;
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
 .carousel-item:hover {
@@ -26,9 +27,7 @@
     color: white;
 }
 
-.job-alerts {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 300px;
+.featured-jobs .carousel-item {
+    min-width: 200px;
+    text-align: center;
 }
