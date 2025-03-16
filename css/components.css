@@ -20,7 +20,7 @@
 .btn-secondary {
     background: transparent;
     color: var(--text-color);
-    border: 1px solid var(--primary-color);
+    border: 1px solid var(--secondary-color);
 }
 
 .btn-secondary:hover {
@@ -28,7 +28,7 @@
 }
 
 .job-card {
-    background: #2a2a2a;
+    background: #4a90e2;
     backdrop-filter: blur(10px);
     border-radius: 10px;
     padding: 1.5rem;
@@ -43,7 +43,7 @@
 }
 
 .job-card.featured {
-    border-left: 5px solid #ff4500;
+    border-left: 5px solid #ffffff; /* White for featured */
 }
 
 .tags {
@@ -54,7 +54,7 @@
 }
 
 .tag {
-    background: rgba(255, 255, 255, 0.1);
+    background: #085ff7;
     color: var(--text-color);
     padding: 0.3rem 0.6rem;
     border-radius: 15px;

@@ -1,11 +1,11 @@
 :root {
-    --primary-color: #085ff7;
-    --secondary-color: #333;
-    --text-color: #e0e0e0;
-    --bg-color: #1a1a1a;
+    --primary-color: #085ff7; /* Blue */
+    --secondary-color: #ffffff; /* White */
+    --text-color: #ffffff; /* White */
+    --bg-color: #085ff7; /* Blue */
     --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    --gradient: linear-gradient(135deg, #085ff7, #4a90e2);
-    --glass-bg: rgba(255, 255, 255, 0.1);
+    --gradient: linear-gradient(135deg, #085ff7, #4a90e2); /* Blue gradient */
+    --glass-bg: rgba(255, 255, 255, 0.1); /* White with transparency */
 }
 
 body {
@@ -16,11 +16,11 @@ body {
 }
 
 a {
-    color: var(--primary-color);
+    color: var(--secondary-color);
     text-decoration: none;
 }
 
 a:hover {
     text-decoration: underline;
-    color: #064ac7;
+    color: #ffffff;
 }

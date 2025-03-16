@@ -1,5 +1,5 @@
 .widget {
-    background: var(--glass-bg);
+    background: #4a90e2;
     backdrop-filter: blur(10px);
     padding: 1.5rem;
     border-radius: 10px;
@@ -7,7 +7,7 @@
     margin: 2rem auto;
     max-width: 1400px;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    color: var(--dark-text);
+    color: var(--text-color);
 }
 
 .carousel {
@@ -18,15 +18,16 @@
 }
 
 .carousel-item {
-    background: rgba(255, 255, 255, 0.1);
+    background: #085ff7;
     padding: 0.5rem 1rem;
     border-radius: 20px;
     transition: all 0.3s ease;
     white-space: nowrap;
+    color: var(--text-color);
 }
 
 .carousel-item:hover {
-    background: var(--primary-color);
+    background: #064ac7;
     color: white;
 }
 
